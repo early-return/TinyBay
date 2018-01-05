@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity
     private Fragment topFragment = null;
     private Fragment browseFragment = null;
 
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,19 @@ public class MainActivity extends AppCompatActivity
 
         init();
 
+        initView();
+
+    }
+
+    private void init() {
+        topFragment = new CategoryFragment();
+        browseFragment = new CategoryFragment();
+    }
+
+    private void initView() {
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -57,20 +70,18 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(true);
 
-        showFragment(topFragment);
+        showFragment(topFragment, R.string.title_app);
     }
 
-    private void init() {
-        topFragment = new CategoryFragment();
-        browseFragment = new CategoryFragment();
-    }
-
-    private void showFragment(Fragment fragment) {
+    private void showFragment(Fragment fragment, int titleId) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_main, fragment)
                 .commit();
+        toolbar.setTitle(titleId);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -111,9 +122,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_top) {
-            showFragment(topFragment);
+            showFragment(topFragment, R.string.title_top);
         } else if (id == R.id.nav_browse) {
-            showFragment(browseFragment);
+            showFragment(browseFragment, R.string.title_browse);
         } else if (id == R.id.nav_recent) {
 
         } else if (id == R.id.nav_settings) {

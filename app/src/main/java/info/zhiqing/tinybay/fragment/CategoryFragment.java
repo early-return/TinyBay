@@ -3,10 +3,12 @@ package info.zhiqing.tinybay.fragment;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,6 @@ import info.zhiqing.tinybay.entities.Category;
  */
 public class CategoryFragment extends Fragment {
     private ViewPager viewPager;
-    private TabLayout tabLayout;
 
 
 
@@ -45,6 +46,11 @@ public class CategoryFragment extends Fragment {
         adapter = new CategoryViewPagerAdapter(getFragmentManager(), categories);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        init();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,10 +58,8 @@ public class CategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_category, container, false);
 
-        init();
 
         viewPager = v.findViewById(R.id.category_pager);
-        tabLayout = v.findViewById(R.id.category_tab_layout);
 
         viewPager.setAdapter(adapter);
 
@@ -81,7 +85,6 @@ public class CategoryFragment extends Fragment {
                         res.getStringArray(R.array.category_list_sub_video_code)));
 
         //初始化音频子分类
-        subCategories = new HashMap<>();
         subCategories.put(
                 categories.get(1).getCode(),
                 getCategoryList(
@@ -89,7 +92,6 @@ public class CategoryFragment extends Fragment {
                         res.getStringArray(R.array.category_list_sub_audio_code)));
 
         //初始化应用子分类
-        subCategories = new HashMap<>();
         subCategories.put(
                 categories.get(2).getCode(),
                 getCategoryList(
@@ -97,7 +99,6 @@ public class CategoryFragment extends Fragment {
                         res.getStringArray(R.array.category_list_sub_audio_code)));
 
         //初始化游戏子分类
-        subCategories = new HashMap<>();
         subCategories.put(
                 categories.get(3).getCode(),
                 getCategoryList(
@@ -105,7 +106,6 @@ public class CategoryFragment extends Fragment {
                         res.getStringArray(R.array.category_list_sub_audio_code)));
 
         //初始化哲学子分类
-        subCategories = new HashMap<>();
         subCategories.put(
                 categories.get(4).getCode(),
                 getCategoryList(
@@ -113,7 +113,6 @@ public class CategoryFragment extends Fragment {
                         res.getStringArray(R.array.category_list_sub_porn_code)));
 
         //初始化其他子分类
-        subCategories = new HashMap<>();
         subCategories.put(
                 categories.get(5).getCode(),
                 getCategoryList(

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <padding
+        android:top="@dimen/sub_cate_list_item_button_vertical_padding"
+        android:right="@dimen/sub_cate_list_item_button_horizontal_padding"
+        android:bottom="@dimen/sub_cate_list_item_button_vertical_padding"
+        android:left="@dimen/sub_cate_list_item_button_horizontal_padding" />
+    <solid android:color="@color/colorPrimary" />
+    <corners android:radius="@dimen/sub_cate_list_item_button_radius" />
+
+</shape>

@@ -2,7 +2,11 @@ package info.zhiqing.tinybay.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import info.zhiqing.tinybay.R;
+import info.zhiqing.tinybay.adapter.SubCategoryRecyclerAdapter;
 import info.zhiqing.tinybay.entities.Category;
 
 /**
@@ -38,13 +43,15 @@ public class SubCategoryFragment extends Fragment {
         return fragment;
     }
 
-    private void init() {
-        parentCate = (Category) getArguments().getSerializable(ARG_PARENT);
-        categories = CategoryFragment.subCategories.get(parentCate.getCode());
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        init();
     }
-
-    private TextView textView;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,14 +59,27 @@ public class SubCategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_sub_category, container, false);
 
-        init();
 
-
-        textView = v.findViewById(R.id.test_text);
-        textView.setText(parentCate.getTitle());
-
+        initView(v);
 
         return v;
     }
 
+    private void init() {
+        parentCate = (Category) getArguments().getSerializable(ARG_PARENT);
+        categories = CategoryFragment.subCategories.get(parentCate.getCode());
+
+        Log.d("SubCategoryFragment", "sub category map size: " + CategoryFragment.subCategories.size());
+
+        adapter = new SubCategoryRecyclerAdapter(getContext(), categories);
+    }
+
+    private void initView(View v) {
+        recyclerView = v.findViewById(R.id.sub_category_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setAdapter(adapter);
+    }
 }

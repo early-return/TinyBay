@@ -31,5 +31,4 @@ public interface Spider {
     TorrentDetail detail(String code) throws IOException;
 
 
-
 }
