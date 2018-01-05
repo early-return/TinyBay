@@ -95,15 +95,15 @@ public class CategoryFragment extends Fragment {
         subCategories.put(
                 categories.get(2).getCode(),
                 getCategoryList(
-                        res.getStringArray(R.array.category_list_sub_audio_title),
-                        res.getStringArray(R.array.category_list_sub_audio_code)));
+                        res.getStringArray(R.array.category_list_sub_app_title),
+                        res.getStringArray(R.array.category_list_sub_app_code)));
 
         //初始化游戏子分类
         subCategories.put(
                 categories.get(3).getCode(),
                 getCategoryList(
-                        res.getStringArray(R.array.category_list_sub_audio_title),
-                        res.getStringArray(R.array.category_list_sub_audio_code)));
+                        res.getStringArray(R.array.category_list_sub_game_title),
+                        res.getStringArray(R.array.category_list_sub_game_code)));
 
         //初始化哲学子分类
         subCategories.put(
