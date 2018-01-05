@@ -63,7 +63,7 @@ public class SpiderLocal implements Spider {
     //通过Url地址爬取页面
     private String fetchPageByUrl(String url) throws IOException {
         Request switchViewRequest = new Request.Builder()
-                .url("https://thepiratebay.org/switchview.php?view=s")
+                .url(baseUrl + "/switchview.php?view=s")
                 .addHeader("accept-language", "zh-CN,en-US;q=0.8,en;q=0.6,zh;q=0.4")
                 .build();
         client.newCall(switchViewRequest).execute().close();
@@ -184,6 +184,12 @@ public class SpiderLocal implements Spider {
 
     public List<Torrent> user(String username, int page) throws IOException {
         String url = baseUrl + "/top/" + username + "/" + page;
+        return fetchTorrentsByUrl(url);
+    }
+
+    @Override
+    public List<Torrent> recent(String typeCode) throws IOException {
+        String url = baseUrl + "/recent";
         return fetchTorrentsByUrl(url);
     }
 

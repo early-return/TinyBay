@@ -24,7 +24,12 @@ public interface Spider {
     //查看特定用户上传的列表
     List<Torrent> user(String username, int page) throws IOException;
 
+    //查看最新列表
+    List<Torrent> recent(String typeCode) throws IOException;
+
     //通过编号获取详细信息
     TorrentDetail detail(String code) throws IOException;
+
+
 
 }

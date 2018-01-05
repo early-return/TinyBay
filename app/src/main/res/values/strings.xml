@@ -1,8 +1,90 @@
 <resources>
+    //App相关
     <string name="app_name">Tiny Bay</string>
 
+    //导航栏
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_top">Top100</string>
+    <string name="nav_browse">浏览</string>
+    <string name="nav_recent">最新</string>
+    <string name="nav_settings">设置</string>
+    <string name="nav_help">帮助</string>
+    <string name="nav_share">分享</string>
+    <string name="nav_send">反馈</string>
+    <string name="nav_about">关于</string>
+    <string name="nav_more">更多</string>
 
     <string name="action_settings">Settings</string>
+
+
+    //数组相关
+
+    //父分类标题数组
+    <string name="category_list_parent_video">视频</string>
+    <string name="category_list_parent_audio">音频</string>
+    <string name="category_list_parent_app">应用</string>
+    <string name="category_list_parent_game">游戏</string>
+    <string name="category_list_parent_porn">哲学</string>
+    <string name="category_list_parent_other">其他</string>
+
+    //视频子分类标题数组
+    <string name="category_list_sub_video_1">电影</string>
+    <string name="category_list_sub_video_2">电影DVD</string>
+    <string name="category_list_sub_video_3">MV</string>
+    <string name="category_list_sub_video_4">电影片段</string>
+    <string name="category_list_sub_video_5">电视节目</string>
+    <string name="category_list_sub_video_6">手持设备</string>
+    <string name="category_list_sub_video_7">高清电影</string>
+    <string name="category_list_sub_video_8">高清电视</string>
+    <string name="category_list_sub_video_9">3D</string>
+    <string name="category_list_sub_video_10">其它</string>
+
+    //音频子分类标题数组
+    <string name="category_list_sub_audio_1">音乐</string>
+    <string name="category_list_sub_audio_2">有声读物</string>
+    <string name="category_list_sub_audio_3">声音片段</string>
+    <string name="category_list_sub_audio_4">FLAC</string>
+    <string name="category_list_sub_audio_5">其它</string>
+
+    //应用子分类标题数组
+    <string name="category_list_sub_app_1">Windows</string>
+    <string name="category_list_sub_app_2">Mac</string>
+    <string name="category_list_sub_app_3">Unix</string>
+    <string name="category_list_sub_app_4">手持设备</string>
+    <string name="category_list_sub_app_5">IOS</string>
+    <string name="category_list_sub_app_6">Android</string>
+    <string name="category_list_sub_app_7">其它系统</string>
+
+    //游戏子分类标题数组
+    <string name="category_list_sub_game_1">PC</string>
+    <string name="category_list_sub_game_2">Mac</string>
+    <string name="category_list_sub_game_3">PSx</string>
+    <string name="category_list_sub_game_4">XBOX</string>
+    <string name="category_list_sub_game_5">Wii</string>
+    <string name="category_list_sub_game_6">手持设备</string>
+    <string name="category_list_sub_game_7">IOS</string>
+    <string name="category_list_sub_game_8">Android</string>
+    <string name="category_list_sub_game_9">其它</string>
+
+    //哲学子分类标题数组
+    <string name="category_list_sub_porn_1">电影</string>
+    <string name="category_list_sub_porn_2">电影DVD</string>
+    <string name="category_list_sub_porn_3">图片</string>
+    <string name="category_list_sub_porn_4">游戏</string>
+    <string name="category_list_sub_porn_5">高清电影</string>
+    <string name="category_list_sub_porn_6">电影片段</string>
+    <string name="category_list_sub_porn_7">其它</string>
+
+    //其他子分类标题数组
+    <string name="category_list_sub_other_1">电子书</string>
+    <string name="category_list_sub_other_2">漫画</string>
+    <string name="category_list_sub_other_3">图片</string>
+    <string name="category_list_sub_other_4">封面</string>
+    <string name="category_list_sub_other_5">物理学</string>
+    <string name="category_list_sub_other_6">其它</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

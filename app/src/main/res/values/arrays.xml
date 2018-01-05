@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 父分类标题数组 -->
+    <string-array name="category_list_parent_title">
+        <item>@string/category_list_parent_video</item>
+        <item>@string/category_list_parent_audio</item>
+        <item>@string/category_list_parent_app</item>
+        <item>@string/category_list_parent_game</item>
+        <item>@string/category_list_parent_porn</item>
+        <item>@string/category_list_parent_other</item>
+    </string-array>
+
+    <!-- 父分类代码数组 -->
+    <string-array name="category_list_parent_code">
+        <item>200</item>
+        <item>100</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+    </string-array>
+
+    <!-- 视频子分类标题数组 -->
+    <string-array name="category_list_sub_video_title">
+        <item>@string/category_list_sub_video_1</item>
+        <item>@string/category_list_sub_video_2</item>
+        <item>@string/category_list_sub_video_3</item>
+        <item>@string/category_list_sub_video_4</item>
+        <item>@string/category_list_sub_video_5</item>
+        <item>@string/category_list_sub_video_6</item>
+        <item>@string/category_list_sub_video_7</item>
+        <item>@string/category_list_sub_video_8</item>
+        <item>@string/category_list_sub_video_9</item>
+        <item>@string/category_list_sub_video_10</item>
+    </string-array>
+
+    <!-- 视频子分类代码数组 -->
+    <string-array name="category_list_sub_video_code">
+        <item>201</item>
+        <item>202</item>
+        <item>203</item>
+        <item>204</item>
+        <item>205</item>
+        <item>206</item>
+        <item>207</item>
+        <item>208</item>
+        <item>209</item>
+        <item>299</item>
+    </string-array>
+
+    <!-- 音频子分类标题数组 -->
+    <string-array name="category_list_sub_audio_title">
+        <item>@string/category_list_sub_audio_1</item>
+        <item>@string/category_list_sub_audio_2</item>
+        <item>@string/category_list_sub_audio_3</item>
+        <item>@string/category_list_sub_audio_4</item>
+        <item>@string/category_list_sub_audio_5</item>
+    </string-array>
+
+    <!-- 音频子分类代码数组 -->
+    <string-array name="category_list_sub_audio_code">
+        <item>101</item>
+        <item>102</item>
+        <item>103</item>
+        <item>104</item>
+        <item>199</item>
+    </string-array>
+
+    <!-- 应用子分类标题数组 -->
+    <string-array name="category_list_sub_app_title">
+        <item>@string/category_list_sub_app_1</item>
+        <item>@string/category_list_sub_app_2</item>
+        <item>@string/category_list_sub_app_3</item>
+        <item>@string/category_list_sub_app_4</item>
+        <item>@string/category_list_sub_app_5</item>
+        <item>@string/category_list_sub_app_6</item>
+        <item>@string/category_list_sub_app_7</item>
+    </string-array>
+
+    <!-- 应用子分类代码数组 -->
+    <string-array name="category_list_sub_app_code">
+        <item>301</item>
+        <item>302</item>
+        <item>303</item>
+        <item>304</item>
+        <item>305</item>
+        <item>306</item>
+        <item>399</item>
+    </string-array>
+
+    <!-- 游戏子分类标题数组 -->
+    <string-array name="category_list_sub_game_title">
+        <item>@string/category_list_sub_game_1</item>
+        <item>@string/category_list_sub_game_2</item>
+        <item>@string/category_list_sub_game_3</item>
+        <item>@string/category_list_sub_game_4</item>
+        <item>@string/category_list_sub_game_5</item>
+        <item>@string/category_list_sub_game_6</item>
+        <item>@string/category_list_sub_game_7</item>
+        <item>@string/category_list_sub_game_8</item>
+        <item>@string/category_list_sub_game_9</item>
+    </string-array>
+
+    <!-- 游戏子分类代码数组 -->
+    <string-array name="category_list_sub_game_code">
+        <item>401</item>
+        <item>402</item>
+        <item>403</item>
+        <item>404</item>
+        <item>405</item>
+        <item>406</item>
+        <item>407</item>
+        <item>408</item>
+        <item>499</item>
+    </string-array>
+
+    <!-- 哲学子分类标题数组 -->
+    <string-array name="category_list_sub_porn_title">
+        <item>@string/category_list_sub_porn_1</item>
+        <item>@string/category_list_sub_porn_2</item>
+        <item>@string/category_list_sub_porn_3</item>
+        <item>@string/category_list_sub_porn_4</item>
+        <item>@string/category_list_sub_porn_5</item>
+        <item>@string/category_list_sub_porn_6</item>
+        <item>@string/category_list_sub_porn_7</item>
+    </string-array>
+
+    <!-- 哲学子分类代码数组 -->
+    <string-array name="category_list_sub_porn_code">
+        <item>501</item>
+        <item>502</item>
+        <item>503</item>
+        <item>504</item>
+        <item>505</item>
+        <item>506</item>
+        <item>599</item>
+    </string-array>
+
+    <!-- 其他子分类标题数组 -->
+    <string-array name="category_list_sub_other_title">
+        <item>@string/category_list_sub_other_1</item>
+        <item>@string/category_list_sub_other_2</item>
+        <item>@string/category_list_sub_other_3</item>
+        <item>@string/category_list_sub_other_4</item>
+        <item>@string/category_list_sub_other_5</item>
+        <item>@string/category_list_sub_other_6</item>
+    </string-array>
+
+    <!-- 其他子分类代码数组 -->
+    <string-array name="category_list_sub_other_code">
+        <item>601</item>
+        <item>602</item>
+        <item>603</item>
+        <item>604</item>
+        <item>605</item>
+        <item>606</item>
+    </string-array>
+</resources>
