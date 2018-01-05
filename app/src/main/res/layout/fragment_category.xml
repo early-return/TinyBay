@@ -13,7 +13,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/category_tab_layout"
             app:tabBackground="@color/colorPrimary"
-            app:tabTextColor="@color/white"
+            app:tabTextColor="@color/grayLight"
             app:tabSelectedTextColor="@color/white"
             app:tabIndicatorColor="@color/colorAccent"
             android:elevation="5dp"

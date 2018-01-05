@@ -22,6 +22,7 @@ import java.util.Map;
 
 import info.zhiqing.tinybay.entities.Category;
 import info.zhiqing.tinybay.fragment.CategoryFragment;
+import info.zhiqing.tinybay.util.CategoryUtil;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        CategoryUtil.initCategories(this);
+
         init();
 
         initView();
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void init() {
+
         topFragment = new CategoryFragment();
         browseFragment = new CategoryFragment();
     }
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity
                 .commit();
         toolbar.setTitle(titleId);
     }
+
 
 
     @Override

@@ -17,6 +17,7 @@ import java.util.List;
 import info.zhiqing.tinybay.R;
 import info.zhiqing.tinybay.adapter.SubCategoryRecyclerAdapter;
 import info.zhiqing.tinybay.entities.Category;
+import info.zhiqing.tinybay.util.CategoryUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,9 +68,7 @@ public class SubCategoryFragment extends Fragment {
 
     private void init() {
         parentCate = (Category) getArguments().getSerializable(ARG_PARENT);
-        categories = CategoryFragment.subCategories.get(parentCate.getCode());
-
-        Log.d("SubCategoryFragment", "sub category map size: " + CategoryFragment.subCategories.size());
+        categories = CategoryUtil.SUB_CATEGORIES.get(parentCate.getCode());
 
         adapter = new SubCategoryRecyclerAdapter(getContext(), categories);
     }
