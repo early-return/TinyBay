@@ -35,7 +35,7 @@ public class TorrentListFragment extends Fragment {
     private TorrentListAdapter adapter;
     private SpiderClient client;
 
-    private String baseUrl = "https://thepiratebay.org/browse/101";
+    private String baseUrl = "https://thepiratebay.org/recent";
     private boolean multiPages = false;
     private boolean loadedAll = false;
     private int currentPage = 0;
@@ -43,8 +43,7 @@ public class TorrentListFragment extends Fragment {
 
     public TorrentListFragment() {
         // Required empty public constructor
-        adapter = new TorrentListAdapter(getActivity());
-        client = new SpiderClient();
+
     }
 
     private void initData() {
@@ -89,7 +88,9 @@ public class TorrentListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //initData();
+
+        adapter = new TorrentListAdapter(getActivity());
+        client = new SpiderClient();
     }
 
     @Override
@@ -98,13 +99,15 @@ public class TorrentListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_torrent_list, container, false);
 
-        initView(v);
+        init(v);
+        //initData();
         loadData();
 
         return v;
     }
 
-    private void initView(View v) {
+    private void init(View v) {
+
         recyclerView = v.findViewById(R.id.torrent_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);

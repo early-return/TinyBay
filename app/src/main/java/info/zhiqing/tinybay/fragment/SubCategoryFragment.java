@@ -48,6 +48,8 @@ public class SubCategoryFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
 
+    private TorrentListFragment fragment;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,8 @@ public class SubCategoryFragment extends Fragment {
         categories = CategoryUtil.SUB_CATEGORIES.get(parentCate.getCode());
 
         adapter = new SubCategoryRecyclerAdapter(getContext(), categories);
+
+        fragment = new TorrentListFragment();
     }
 
     private void initView(View v) {
@@ -83,7 +87,7 @@ public class SubCategoryFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         getChildFragmentManager().beginTransaction()
-                .replace(R.id.torrent_list_container, new TorrentListFragment())
+                .replace(R.id.torrent_list_container, fragment)
                 .commit();
     }
 }

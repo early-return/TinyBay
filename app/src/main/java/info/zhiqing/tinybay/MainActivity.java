@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,35 +24,44 @@ import java.util.Map;
 import info.zhiqing.tinybay.entities.Category;
 import info.zhiqing.tinybay.fragment.CategoryFragment;
 import info.zhiqing.tinybay.util.CategoryUtil;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public static final String TAG = "MainActivity";
 
-    private Fragment topFragment = null;
     private Fragment browseFragment = null;
 
     Toolbar toolbar;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        CategoryUtil.initCategories(this);
-
-        init();
+        CategoryUtil.initCategories(this)
+                .subscribe(new Consumer<Void>() {
+                    @Override
+                    public void accept(Void aVoid) throws Exception {
+                        Log.d(TAG, "分类信息初始化完成！");
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Snackbar.make(toolbar, "分类信息初始化错误：" + throwable.getMessage(), Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                });
 
         initView();
 
     }
 
-    private void init() {
-
-        topFragment = new CategoryFragment();
-        browseFragment = new CategoryFragment();
-    }
-
     private void initView() {
         setContentView(R.layout.activity_main);
+
+        browseFragment = new CategoryFragment();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,7 +85,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        showFragment(topFragment, R.string.title_app);
+        showFragment(browseFragment, R.string.title_app);
     }
 
     private void showFragment(Fragment fragment, int titleId) {
@@ -125,9 +135,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_top) {
-            showFragment(topFragment, R.string.title_top);
-        } else if (id == R.id.nav_browse) {
+        if (id == R.id.nav_browse) {
             showFragment(browseFragment, R.string.title_browse);
         } else if (id == R.id.nav_recent) {
 

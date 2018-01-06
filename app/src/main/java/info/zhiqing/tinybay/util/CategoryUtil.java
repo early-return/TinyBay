@@ -2,6 +2,7 @@ package info.zhiqing.tinybay.util;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -11,6 +12,12 @@ import java.util.Map;
 
 import info.zhiqing.tinybay.R;
 import info.zhiqing.tinybay.entities.Category;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by zhiqing on 18-1-5.
@@ -31,7 +38,7 @@ public class CategoryUtil {
     }
 
     public static int codeToColor(String code) {
-        return codeColorMap.get(code);
+        return codeColorMap.get(code.substring(0, 1) + "00");
     }
 
     public static int codeToIconRes(String code) {
@@ -43,21 +50,26 @@ public class CategoryUtil {
     }
 
     //初始化分类信息
-    public static void initCategories(Context context) {
+    public static Observable<Void> initCategories(Context context) {
         if (CategoryUtil.CATEGORIES == null ||
                 CategoryUtil.SUB_CATEGORIES == null ||
                 CategoryUtil.codeTitleMap == null) {
 
-            Resources res = context.getResources();
+            final Resources res = context.getResources();
 
-            initParentCategories(res);
-            initSubCategories(res);
-            initCodeTitleMap();
-            initCodeColorMap(res);
-            initCodeIconMap();
-
+            return Observable.create(new ObservableOnSubscribe<Void>() {
+                @Override
+                public void subscribe(ObservableEmitter<Void> e) throws Exception {
+                    initParentCategories(res);
+                    initSubCategories(res);
+                    initCodeTitleMap();
+                    initCodeColorMap(res);
+                    initCodeIconMap();
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
         }
-
+        return Observable.empty();
     }
 
 

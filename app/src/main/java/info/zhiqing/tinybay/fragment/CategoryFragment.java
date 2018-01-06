@@ -24,7 +24,6 @@ import info.zhiqing.tinybay.util.CategoryUtil;
 public class CategoryFragment extends Fragment {
     private ViewPager viewPager;
 
-    public static List<Category> categories = null;
     private FragmentStatePagerAdapter adapter = null;
 
 
@@ -32,9 +31,14 @@ public class CategoryFragment extends Fragment {
 
     }
 
+    public static CategoryFragment newInstance() {
+
+
+        return new CategoryFragment();
+    }
+
     private void init() {
-        categories = CategoryUtil.CATEGORIES;
-        adapter = new CategoryViewPagerAdapter(getFragmentManager(), categories);
+        adapter = new CategoryViewPagerAdapter(getFragmentManager(), CategoryUtil.CATEGORIES);
     }
 
     @Override
