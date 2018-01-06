@@ -20,24 +20,40 @@ public class CategoryUtil {
     public static List<Category> CATEGORIES = null;
     public static Map<String, List<Category>> SUB_CATEGORIES = null;
 
-    private static Map<String, String> codeTitleMapper = null;
+    private static Map<String, String> codeTitleMap = null;
+    private static Map<String, Integer> codeColorMap = null;
+    private static Map<String, Integer> codeIconMap = null;
 
     //返回给定分类编号对应的标题
     public static String codeToTitle(String code) {
-        return codeTitleMapper.get(code);
+        return codeTitleMap.get(code);
+    }
+
+    public static int codeToColorRes(String code) {
+        return codeColorMap.get(code);
+    }
+
+    public static int codeToIconRes(String code) {
+        if (codeIconMap.containsKey(code)) {
+            return codeIconMap.get(code);
+        } else {
+            return codeIconMap.get(code.substring(0, 1) + "00");
+        }
     }
 
     //初始化分类信息
     public static void initCategories(Context context) {
         if (CategoryUtil.CATEGORIES == null ||
                 CategoryUtil.SUB_CATEGORIES == null ||
-                CategoryUtil.codeTitleMapper == null) {
+                CategoryUtil.codeTitleMap == null) {
 
             Resources res = context.getResources();
 
             initParentCategories(res);
             initSubCategories(res);
-            initMapper();
+            initCodeTitleMap();
+            initCodeColorMap(res);
+            initCodeIconMap();
 
         }
 
@@ -97,19 +113,40 @@ public class CategoryUtil {
                         res.getStringArray(R.array.category_list_sub_other_code)));
     }
 
-    private static void initMapper() {
-        codeTitleMapper = new HashMap<>();
+    private static void initCodeTitleMap() {
+        codeTitleMap = new HashMap<>();
 
         for (Category category : CATEGORIES) {
-            codeTitleMapper.put(category.getCode(), category.getTitle());
+            codeTitleMap.put(category.getCode(), category.getTitle());
 
             List<Category> list = SUB_CATEGORIES.get(category.getCode());
 
             for (Category cate : list) {
-                codeTitleMapper.put(cate.getCode(), cate.getTitle());
+                codeTitleMap.put(cate.getCode(), cate.getTitle());
             }
         }
+    }
 
+    private static void initCodeColorMap(Resources res) {
+        String[] codes = res.getStringArray(R.array.category_list_parent_code);
+        int[] colors = res.getIntArray(R.array.category_list_parent_color);
+
+        codeColorMap = new HashMap<>();
+
+        for (int i = 0; i < codes.length; i++) {
+            codeColorMap.put(codes[i], colors[i]);
+        }
+    }
+
+    private static void initCodeIconMap() {
+        codeIconMap = new HashMap<>();
+
+        codeIconMap.put("100", R.drawable.ic_music_note_white_24dp);
+        codeIconMap.put("200", R.drawable.ic_video_library_white_24dp);
+        codeIconMap.put("300", R.drawable.ic_apps_white_24dp);
+        codeIconMap.put("400", R.drawable.ic_videogame_asset_white_24dp);
+        codeIconMap.put("500", R.drawable.ic_favorite_white_24dp);
+        codeIconMap.put("600", R.drawable.ic_get_app_white_24dp);
     }
 
 

@@ -21,6 +21,16 @@
         <item>600</item>
     </string-array>
 
+    <!-- 父分类颜色数组 -->
+    <integer-array name="category_list_parent_color">
+        <item>@color/videoBack</item>
+        <item>@color/audioBack</item>
+        <item>@color/appBack</item>
+        <item>@color/gameBack</item>
+        <item>@color/pornBack</item>
+        <item>@color/otherBack</item>
+    </integer-array>
+
     <!-- 视频子分类标题数组 -->
     <string-array name="category_list_sub_video_title">
         <item>@string/category_list_sub_video_1</item>
