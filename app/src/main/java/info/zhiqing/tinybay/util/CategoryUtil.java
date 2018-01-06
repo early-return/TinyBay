@@ -2,6 +2,7 @@ package info.zhiqing.tinybay.util;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class CategoryUtil {
         return codeTitleMap.get(code);
     }
 
-    public static int codeToColorRes(String code) {
+    public static int codeToColor(String code) {
         return codeColorMap.get(code);
     }
 
@@ -135,6 +136,7 @@ public class CategoryUtil {
 
         for (int i = 0; i < codes.length; i++) {
             codeColorMap.put(codes[i], colors[i]);
+            Log.d("CategoryUtil", codes[i] + ": " + colors[i]);
         }
     }
 

@@ -1,6 +1,8 @@
 package info.zhiqing.tinybay.spider;
 
 
+import android.util.Log;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -77,6 +79,7 @@ public class SpiderLocal implements Spider {
             body = response.body().string();
         }
         response.close();
+        System.out.println(body);
         return body;
     }
 
@@ -162,35 +165,35 @@ public class SpiderLocal implements Spider {
         return torrents;
     }
 
-    private List<Torrent> fetchTorrentsByUrl(String url) throws IOException {
+    public List<Torrent> list(String url) throws IOException {
         String body = fetchPageByUrl(url);
         return collectTorrents(body);
     }
 
     public List<Torrent> search(String keyword, int page) throws IOException {
         String url = baseUrl + "/search/" + keyword + "/" + page;
-        return fetchTorrentsByUrl(url);
+        return list(url);
     }
 
     public List<Torrent> browse(String typeCode, int page) throws IOException {
         String url = baseUrl + "/browse/" + typeCode + "/" + page;
-        return fetchTorrentsByUrl(url);
+        return list(url);
     }
 
     public List<Torrent> top(String typeCode, int page) throws IOException {
         String url = baseUrl + "/top/" + typeCode + "/" + page;
-        return fetchTorrentsByUrl(url);
+        return list(url);
     }
 
     public List<Torrent> user(String username, int page) throws IOException {
         String url = baseUrl + "/top/" + username + "/" + page;
-        return fetchTorrentsByUrl(url);
+        return list(url);
     }
 
     @Override
     public List<Torrent> recent(String typeCode) throws IOException {
         String url = baseUrl + "/recent";
-        return fetchTorrentsByUrl(url);
+        return list(url);
     }
 
     private TorrentDetail collectDetail(String body) {

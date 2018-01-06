@@ -12,6 +12,9 @@ import info.zhiqing.tinybay.entities.TorrentDetail;
 
 public interface Spider {
 
+    //通过URL获取种子列表
+    public List<Torrent> list(String url) throws IOException;
+
     //通过关键词搜索
     List<Torrent> search(String keyword, int page) throws IOException;
 

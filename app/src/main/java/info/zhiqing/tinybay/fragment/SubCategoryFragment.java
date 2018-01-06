@@ -66,6 +66,7 @@ public class SubCategoryFragment extends Fragment {
         return v;
     }
 
+
     private void init() {
         parentCate = (Category) getArguments().getSerializable(ARG_PARENT);
         categories = CategoryUtil.SUB_CATEGORIES.get(parentCate.getCode());
@@ -80,5 +81,9 @@ public class SubCategoryFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);
+
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.torrent_list_container, new TorrentListFragment())
+                .commit();
     }
 }

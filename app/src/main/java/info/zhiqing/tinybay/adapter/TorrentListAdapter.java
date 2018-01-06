@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import info.zhiqing.tinybay.R;
@@ -25,10 +26,16 @@ public class TorrentListAdapter extends RecyclerView.Adapter<TorrentListAdapter.
 
     public TorrentListAdapter(Context context) {
         this.context = context;
+        this.torrents = new ArrayList<>();
     }
 
     public void addData(List<Torrent> torrents) {
         this.torrents.addAll(torrents);
+        this.notifyDataSetChanged();
+    }
+
+    public void addData(Torrent torrent) {
+        this.torrents.add(torrent);
         this.notifyDataSetChanged();
     }
 
@@ -41,11 +48,11 @@ public class TorrentListAdapter extends RecyclerView.Adapter<TorrentListAdapter.
     @Override
     public void onBindViewHolder(TorrentListViewHolder holder, int position) {
         Torrent torrent = torrents.get(position);
-        holder.backLayout.setBackgroundResource(CategoryUtil.codeToColorRes(torrent.getTypeCode()));
-        holder.iconIcon.setImageResource(CategoryUtil.codeToIconRes(torrent.getTypeCode()));
+        holder.backLayout.setBackgroundColor(CategoryUtil.codeToColor(torrent.getTypeCode()));
+        holder.iconIcon.setImageDrawable(context.getResources().getDrawable(CategoryUtil.codeToIconRes(torrent.getTypeCode())));
         holder.iconCate.setText(CategoryUtil.codeToTitle(torrent.getTypeCode()));
         holder.title.setText(torrent.getTitle());
-        String info = torrent.getSize() + " • " + torrent.getAuthor() + " • \uD83E\uDC39" + torrent.getSeeders() + " • \uD83E\uDC3B" + torrent.getLeechers();
+        String info = torrent.getSize() + " • " + torrent.getAuthor() + " • ⇧" + torrent.getSeeders() + " • ⇩" + torrent.getLeechers();
         holder.info.setText(info);
     }
 
