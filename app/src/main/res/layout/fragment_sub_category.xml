@@ -14,13 +14,13 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:scrollbars="none" />
 
-        <FrameLayout
-            android:id="@+id/torrent_list_container"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/torrent_list"
             android:layout_below="@id/sub_category_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </FrameLayout>
+        </android.support.v7.widget.RecyclerView>
 
 
 </RelativeLayout>

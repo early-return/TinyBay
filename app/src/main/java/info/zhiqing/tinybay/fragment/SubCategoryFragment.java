@@ -6,18 +6,24 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import info.zhiqing.tinybay.R;
 import info.zhiqing.tinybay.adapter.SubCategoryRecyclerAdapter;
+import info.zhiqing.tinybay.adapter.TorrentListAdapter;
 import info.zhiqing.tinybay.entities.Category;
+import info.zhiqing.tinybay.entities.Torrent;
 import info.zhiqing.tinybay.util.CategoryUtil;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,10 +51,11 @@ public class SubCategoryFragment extends Fragment {
     }
 
 
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView subCateView;
+    private RecyclerView torrentsView;
+    private RecyclerView.Adapter subCateAdapter;
+    private TorrentListAdapter torrentsAdapter;
 
-    private TorrentListFragment fragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,21 +80,47 @@ public class SubCategoryFragment extends Fragment {
         parentCate = (Category) getArguments().getSerializable(ARG_PARENT);
         categories = CategoryUtil.SUB_CATEGORIES.get(parentCate.getCode());
 
-        adapter = new SubCategoryRecyclerAdapter(getContext(), categories);
+        subCateAdapter = new SubCategoryRecyclerAdapter(getContext(), categories);
+        torrentsAdapter = new TorrentListAdapter(getContext(), "https://thepiratebay.org/browse/" + parentCate.getCode());
 
-        fragment = new TorrentListFragment();
     }
 
     private void initView(View v) {
-        recyclerView = v.findViewById(R.id.sub_category_list);
+        subCateView = v.findViewById(R.id.sub_category_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(layoutManager);
+        subCateView.setLayoutManager(layoutManager);
+        subCateView.setAdapter(subCateAdapter);
 
-        recyclerView.setAdapter(adapter);
+        torrentsView = v.findViewById(R.id.torrent_list);
+        torrentsView.setLayoutManager(new LinearLayoutManager(getContext()));
+        torrentsView.setAdapter(torrentsAdapter);
 
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.torrent_list_container, fragment)
-                .commit();
+        torrentsAdapter.loadData()
+                .subscribeOn(Schedulers.io())
+                .take(0)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Torrent>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Torrent torrent) {
+                        Toast.makeText(getContext(), "OnNext", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Toast.makeText(getContext(), "OnCompleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
     }
 }

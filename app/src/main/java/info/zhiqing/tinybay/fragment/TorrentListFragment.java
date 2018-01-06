@@ -29,16 +29,12 @@ import io.reactivex.schedulers.Schedulers;
  * A simple {@link Fragment} subclass.
  */
 public class TorrentListFragment extends Fragment {
+    public static final String TAG = "TorrentListFragment";
+
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeLayout;
 
     private TorrentListAdapter adapter;
-    private SpiderClient client;
-
-    private String baseUrl = "https://thepiratebay.org/recent";
-    private boolean multiPages = false;
-    private boolean loadedAll = false;
-    private int currentPage = 0;
 
 
     public TorrentListFragment() {
@@ -89,8 +85,6 @@ public class TorrentListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new TorrentListAdapter(getActivity());
-        client = new SpiderClient();
     }
 
     @Override
@@ -101,7 +95,6 @@ public class TorrentListFragment extends Fragment {
 
         init(v);
         //initData();
-        loadData();
 
         return v;
     }
@@ -121,37 +114,5 @@ public class TorrentListFragment extends Fragment {
         );
     }
 
-    private void loadData() {
-
-        if (loadedAll) return;
-
-        String url = multiPages ? baseUrl + "/" + currentPage : baseUrl;
-
-        client.fetchTorrentsByUrl(url)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Torrent>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Toast.makeText(getContext(), "Start load!", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onNext(Torrent torrent) {
-                        adapter.addData(torrent);
-                        Log.d("TorrentListFragment", torrent.getTitle());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Toast.makeText(getContext(), "Load completed!", Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
 
 }
