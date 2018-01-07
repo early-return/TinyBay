@@ -24,6 +24,7 @@ import java.util.Map;
 
 import info.zhiqing.tinybay.entities.Category;
 import info.zhiqing.tinybay.fragment.CategoryFragment;
+import info.zhiqing.tinybay.fragment.TorrentListFragment;
 import info.zhiqing.tinybay.util.CategoryUtil;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity
     public static final String TAG = "MainActivity";
 
     private Fragment browseFragment = null;
+    private Fragment recentFragment = null;
 
     Toolbar toolbar;
 
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         browseFragment = new CategoryFragment();
+        recentFragment = TorrentListFragment.newInstance("https://thepiratebay.org/recent");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -153,7 +156,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_browse) {
             showFragment(browseFragment, R.string.title_browse);
         } else if (id == R.id.nav_recent) {
-            Toast.makeText(this, "Recent", Toast.LENGTH_SHORT).show();
+            showFragment(recentFragment, R.string.title_recent);
         } else if (id == R.id.nav_settings) {
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_help) {

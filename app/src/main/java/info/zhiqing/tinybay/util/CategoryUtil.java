@@ -38,7 +38,7 @@ public class CategoryUtil {
     }
 
     public static int codeToColor(String code) {
-        return codeColorMap.get(code.substring(0, 1) + "00");
+        return codeColorMap.get(parentCode(code));
     }
 
     public static int codeToIconRes(String code) {
@@ -50,7 +50,7 @@ public class CategoryUtil {
     }
 
     public static String parentCode(String code) {
-        return code.substring(0, 1);
+        return code.substring(0, 1) + "00";
     }
 
     //初始化分类信息

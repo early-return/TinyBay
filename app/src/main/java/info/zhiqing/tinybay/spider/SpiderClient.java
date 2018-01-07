@@ -9,6 +9,8 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by zhiqing on 18-1-6.
@@ -30,15 +32,13 @@ public class SpiderClient {
 
     private SpiderClient() { }
 
-    public Observable<Torrent> fetchTorrentsByUrl(final String url) {
-        return Observable.create(new ObservableOnSubscribe<Torrent>() {
+    public Observable<List<Torrent>> fetchTorrentsByUrl(final String url) {
+        return Observable.create(new ObservableOnSubscribe<List<Torrent>>() {
             @Override
-            public void subscribe(ObservableEmitter<Torrent> e) throws Exception {
+            public void subscribe(ObservableEmitter<List<Torrent>> e) throws Exception {
                 List<Torrent> list = spider.list(url);
                 Log.d(TAG, "Get " + url + " : " + list.size());
-                for (Torrent torrent : list) {
-                    e.onNext(torrent);
-                }
+                e.onNext(list);
                 e.onComplete();
             }
         });

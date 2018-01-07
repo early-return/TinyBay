@@ -28,117 +28,87 @@ import io.reactivex.schedulers.Schedulers;
  * Created by zhiqing on 18-1-5.
  */
 
-public class TorrentListAdapter extends RecyclerView.Adapter<TorrentListAdapter.TorrentListViewHolder> {
+public class TorrentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final String TAG = "TorrentListAdapter";
+
+    public static final int TYPE_ITEM = 0;
+    public static final int TYPE_FOOTER = 1;
 
     private Context context;
     private List<Torrent> torrents;
-    private int currentPage = 0;
-    private String baseUrl;
-    private boolean loadedAll = false;
-    private int loadedCount = 0;
+    private boolean loadingMore = false;
 
-    public TorrentListAdapter(Context context, String url) {
+    public TorrentListAdapter(Context context) {
+        Log.d(TAG, "In TorrentListAdapter generator");
+
         this.context = context;
         this.torrents = new ArrayList<>();
-        this.baseUrl = url;
     }
 
     public void addData(List<Torrent> torrents) {
         this.torrents.addAll(torrents);
-        loadedCount++;
-        this.notifyDataSetChanged();
     }
 
-    public boolean isLoadedAll() {
-        return loadedAll;
-    }
-
-    public void setLoadedAll(boolean loadedAll) {
-        this.loadedAll = loadedAll;
-    }
-
-    public int getLoadedCount() {
-        return loadedCount;
-    }
-
-    public void clearLoadedCount() {
-        loadedCount = 0;
-    }
-
-    public void refreshData() {
+    public void clearData() {
         torrents.clear();
-        loadedAll = false;
-        currentPage = 0;
-        loadData();
     }
 
-    public Observable<Torrent> loadData() {
+    public boolean isLoadingMore() {
+        return loadingMore;
+    }
 
-        if (loadedAll) return Observable.empty();
-
-        String url = baseUrl + "/" + currentPage + "";
-
-        clearLoadedCount();
-
-        Observable<Torrent> observable = SpiderClient.getInstance().fetchTorrentsByUrl(url);
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Torrent>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "Start load!");
-                    }
-
-                    @Override
-                    public void onNext(Torrent torrent) {
-                        addData(torrent);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, "Load failed: " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, "Load completed!");
-                        currentPage++;
-                        if (getLoadedCount() == 0) {
-                            loadedAll = true;
-                        }
-                    }
-                });
-
-        return observable;
+    public void setLoadingMore(boolean loadingMore) {
+        this.loadingMore = loadingMore;
     }
 
     public void addData(Torrent torrent) {
         this.torrents.add(torrent);
-        loadedCount++;
-        this.notifyDataSetChanged();
     }
 
     @Override
-    public TorrentListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return new TorrentListViewHolder(inflater.inflate(R.layout.torrents_item, parent, false));
+        Log.d(TAG, "On Create View Holder: " + viewType);
+        if (viewType == TYPE_ITEM) {
+            return new TorrentListViewHolder(inflater.inflate(R.layout.torrents_item, parent, false));
+        } else {
+            return new TorrentListFooterHolder(inflater.inflate(R.layout.torrents_footer, parent, false));
+        }
     }
 
     @Override
-    public void onBindViewHolder(TorrentListViewHolder holder, int position) {
-        Torrent torrent = torrents.get(position);
-        holder.backLayout.setBackgroundColor(CategoryUtil.codeToColor(torrent.getTypeCode()));
-        holder.iconIcon.setImageDrawable(context.getResources().getDrawable(CategoryUtil.codeToIconRes(torrent.getTypeCode())));
-        holder.iconCate.setText(CategoryUtil.codeToTitle(torrent.getTypeCode()));
-        holder.title.setText(torrent.getTitle());
-        String info = torrent.getSize() + " • " + torrent.getAuthor() + " • ⇧" + torrent.getSeeders() + " • ⇩" + torrent.getLeechers();
-        holder.info.setText(info);
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        if (getItemViewType(position) == TYPE_ITEM) {
+            Torrent torrent = torrents.get(position);
+            TorrentListViewHolder holder = (TorrentListViewHolder) viewHolder;
+            holder.backLayout.setBackgroundColor(CategoryUtil.codeToColor(torrent.getTypeCode()));
+            holder.iconIcon.setImageDrawable(context.getResources().getDrawable(CategoryUtil.codeToIconRes(torrent.getTypeCode())));
+            String title = CategoryUtil.codeToTitle(CategoryUtil.parentCode(torrent.getTypeCode()));
+            holder.iconCate.setText(title);
+            holder.title.setText(torrent.getTitle());
+            String info = torrent.getSize() + " • " + torrent.getAuthor() + " • ⇧" + torrent.getSeeders() + " • ⇩" + torrent.getLeechers();
+            holder.info.setText(info);
+        }
+        Log.d(TAG, "On Bind: " + position);
     }
 
     @Override
     public int getItemCount() {
-        return torrents != null ? torrents.size() : 0;
+        int count;
+        if (loadingMore) {
+            count = torrents.size() + 1;
+        } else {
+            count = torrents.size();
+        }
+        Log.d(TAG, "Get item count: " + count);
+        return count;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        int type = position == torrents.size() ? TYPE_FOOTER : TYPE_ITEM;
+        Log.d(TAG, position + " : " +type);
+        return type;
     }
 
     class TorrentListViewHolder extends RecyclerView.ViewHolder {
@@ -157,5 +127,12 @@ public class TorrentListAdapter extends RecyclerView.Adapter<TorrentListAdapter.
             info = itemView.findViewById(R.id.text_info);
         }
     }
+
+    class TorrentListFooterHolder extends RecyclerView.ViewHolder {
+        public TorrentListFooterHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
 }
 

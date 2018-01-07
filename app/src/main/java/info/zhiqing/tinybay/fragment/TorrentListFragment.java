@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import info.zhiqing.tinybay.R;
 import info.zhiqing.tinybay.adapter.TorrentListAdapter;
 import info.zhiqing.tinybay.entities.Torrent;
 import info.zhiqing.tinybay.spider.SpiderClient;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -31,10 +31,36 @@ import io.reactivex.schedulers.Schedulers;
 public class TorrentListFragment extends Fragment {
     public static final String TAG = "TorrentListFragment";
 
+    private static final String ARG_URL = "info.zhiqing.tinybay.ARG_URL";
+
+    public static final int STATE_LOADING = 0;
+    public static final int STATE_SGOWING = 1;
+
+    private int state = 0;
+
+    //视图
     private RecyclerView recyclerView;
+    private View loadingPage;
     private SwipeRefreshLayout swipeLayout;
 
     private TorrentListAdapter adapter;
+    private LinearLayoutManager layoutManager;
+    private List<View> pages = new ArrayList<>();
+
+    private int currentPage = 0;
+    private String baseUrl = "https://thepiratebay.org/recent";
+    private boolean loadedAll = false;
+
+    public static TorrentListFragment newInstance(String url) {
+        TorrentListFragment fragment = new TorrentListFragment();
+
+        Bundle args = new Bundle();
+        args.putString(ARG_URL, url);
+
+        fragment.setArguments(args);
+
+        return fragment;
+    }
 
 
     public TorrentListFragment() {
@@ -42,48 +68,18 @@ public class TorrentListFragment extends Fragment {
 
     }
 
-    private void initData() {
-
-        List<Torrent> list = new ArrayList<>();
-
-        Torrent torrent1 = new Torrent();
-        torrent1.setTitle("Hello World!");
-        torrent1.setSize("123M");
-        torrent1.setSeeders(123);
-        torrent1.setLeechers(234);
-        torrent1.setTypeCode("200");
-        list.add(torrent1);
-
-        Torrent torrent2 = new Torrent();
-        torrent2.setTitle("Hahahaha!");
-        torrent2.setSize("13M");
-        torrent2.setSeeders(13);
-        torrent2.setLeechers(34);
-        torrent2.setTypeCode("100");
-        list.add(torrent2);
-
-        Torrent torrent3 = new Torrent();
-        torrent3.setTitle("Wow world!");
-        torrent3.setSize("12M");
-        torrent3.setSeeders(12);
-        torrent3.setLeechers(23);
-        torrent3.setTypeCode("500");
-        list.add(torrent3);
-
-        Torrent torrent4 = new Torrent();
-        torrent4.setTitle("Aha!");
-        torrent4.setSize("23M");
-        torrent4.setSeeders(23);
-        torrent4.setLeechers(34);
-        torrent4.setTypeCode("400");
-        list.add(torrent4);
-
-        adapter.addData(list);
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        baseUrl = args.getString(ARG_URL);
+
+        if (adapter == null) {
+            adapter = new TorrentListAdapter(getContext());
+        }
+
 
     }
 
@@ -93,17 +89,41 @@ public class TorrentListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_torrent_list, container, false);
 
-        init(v);
-        //initData();
+        initView(v);
+
+        switchPage();
 
         return v;
     }
 
-    private void init(View v) {
+    private void initView(View v) {
+        loadingPage = v.findViewById(R.id.torrents_loading);
+        pages.add(loadingPage);
 
+        layoutManager = new LinearLayoutManager(getContext());
         recyclerView = v.findViewById(R.id.torrent_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        pages.add(recyclerView);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int lastVisibleItem = 0;
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisibleItem + 5 > adapter.getItemCount()
+                        && !adapter.isLoadingMore()) {
+                    loadData();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition();
+            }
+        });
 
         swipeLayout = v.findViewById(R.id.swipe_layout);
         swipeLayout.setColorSchemeResources(
@@ -112,7 +132,85 @@ public class TorrentListFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_red_light
         );
+
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
+
+        if (currentPage == 0) {
+            loadData();
+        }
     }
 
+    private void switchPage() {
+        switch (state) {
+            case STATE_LOADING:
+                switchPage(loadingPage);
+                break;
+            case STATE_SGOWING:
+                switchPage(recyclerView);
+                break;
+        }
+    }
+
+    private void switchPage(View v) {
+        for (int i = 0; i < pages.size(); i++) {
+            if (v != pages.get(i)) {
+                pages.get(i).setVisibility(View.INVISIBLE);
+            }
+        }
+        v.setVisibility(View.VISIBLE);
+    }
+
+    public void refreshData() {
+        loadedAll = false;
+        currentPage = 0;
+        adapter.clearData();
+        loadData();
+    }
+
+    public void loadData() {
+
+        if (loadedAll) return;
+
+        String url = baseUrl + "/" + currentPage + "";
+
+        currentPage++;
+        adapter.setLoadingMore(true);
+
+        Observable<List<Torrent>> observable = SpiderClient.getInstance().fetchTorrentsByUrl(url);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Torrent>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(List<Torrent> torrents) {
+                        if (torrents.size() == 0) {
+                            loadedAll = true;
+                        }
+                        adapter.addData(torrents);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getContext(), "出错: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        swipeLayout.setRefreshing(false);
+                        state = STATE_SGOWING;
+                        switchPage();
+                        adapter.setLoadingMore(false);
+                    }
+                });
+    }
 
 }
