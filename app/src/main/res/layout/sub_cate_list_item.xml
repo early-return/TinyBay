@@ -25,6 +25,7 @@
         android:textAlignment="center"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:minWidth="100dp"
         />
 
 </android.support.v7.widget.CardView>

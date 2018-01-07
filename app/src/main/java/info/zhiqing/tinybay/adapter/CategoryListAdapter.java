@@ -3,6 +3,7 @@ package info.zhiqing.tinybay.adapter;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +43,13 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @Override
     public void onBindViewHolder(CateListItemViewHolder holder, int position) {
-        holder.icon.setImageResource(CategoryUtil.codeToIconRes(CategoryUtil.CATEGORIES.get(position).getCode()));
+        holder.icon.setImageResource(
+                CategoryUtil.codeToIconRes(CategoryUtil.CATEGORIES.get(position).getCode()));
         holder.title.setText(CategoryUtil.CATEGORIES.get(position).getTitle());
-        holder.cateListBar.setBackgroundColor(CategoryUtil.codeToColor(CategoryUtil.CATEGORIES.get(position).getCode()));
-        holder.list.setLayoutManager(new GridLayoutManager(context, 4));
+        holder.cateListBar.setBackgroundColor(
+                CategoryUtil.codeToColor(CategoryUtil.CATEGORIES.get(position).getCode()));
+        holder.list.setLayoutManager(
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         holder.list.setAdapter(adapters.get(position));
     }
 
@@ -55,6 +59,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     }
 
     class CateListItemViewHolder extends RecyclerView.ViewHolder {
+        View item;
         ImageView icon;
         TextView title;
         RecyclerView list;
@@ -62,6 +67,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         public CateListItemViewHolder(View itemView) {
             super(itemView);
+            item = itemView.findViewById(R.id.category_item);
             icon = itemView.findViewById(R.id.cate_title_bar_icon);
             title = itemView.findViewById(R.id.cate_title_bar_title);
             list = itemView.findViewById(R.id.sub_category_list);
