@@ -1,7 +1,7 @@
 package info.zhiqing.tinybay.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import info.zhiqing.tinybay.R;
+import info.zhiqing.tinybay.activity.SearchActivity;
 import info.zhiqing.tinybay.entities.Category;
 import info.zhiqing.tinybay.util.CategoryUtil;
 
@@ -51,6 +52,14 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         holder.list.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         holder.list.setAdapter(adapters.get(position));
+
+        holder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SearchActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
