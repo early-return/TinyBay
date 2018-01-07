@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/sub_cate_list_item_button_radius"
+    android:layout_margin="@dimen/sub_cate_list_item_button_margin"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/sub_cate_button"
         android:text="Test"
+        android:background="@android:color/holo_red_light"
         android:gravity="center"
-        android:background="@drawable/sub_cate_list_item_button_back"
         android:textColor="@color/white"
+        android:paddingStart="@dimen/sub_cate_list_item_button_horizontal_padding"
+        android:paddingEnd="@dimen/sub_cate_list_item_button_horizontal_padding"
+        android:paddingTop="@dimen/sub_cate_list_item_button_vertical_padding"
+        android:paddingBottom="@dimen/sub_cate_list_item_button_vertical_padding"
         android:textSize="@dimen/sub_cate_list_font_size"
-        android:layout_marginStart="@dimen/sub_cate_list_item_button_margin"
-        android:layout_marginEnd="@dimen/sub_cate_list_item_button_margin"
+        android:textAlignment="center"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         />
 
-</LinearLayout>
+</android.support.v7.widget.CardView>

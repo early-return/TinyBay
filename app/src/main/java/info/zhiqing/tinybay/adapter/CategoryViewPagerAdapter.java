@@ -2,6 +2,7 @@ package info.zhiqing.tinybay.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import info.zhiqing.tinybay.fragment.SubCategoryFragment;
  * Created by zhiqing on 18-1-5.
  */
 
-public class CategoryViewPagerAdapter extends FragmentStatePagerAdapter {
+public class CategoryViewPagerAdapter extends FragmentPagerAdapter {
     private List<Category> categories;
     private List<Fragment> fragments;
 
@@ -27,6 +28,8 @@ public class CategoryViewPagerAdapter extends FragmentStatePagerAdapter {
             fragments.add(SubCategoryFragment.newInstance(cate));
         }
     }
+
+
 
     @Override
     public Fragment getItem(int position) {

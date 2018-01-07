@@ -35,7 +35,7 @@ public class SpiderClient {
             @Override
             public void subscribe(ObservableEmitter<Torrent> e) throws Exception {
                 List<Torrent> list = spider.list(url);
-                Log.d("SpiderClient", "Get " + url + " : " + list.size());
+                Log.d(TAG, "Get " + url + " : " + list.size());
                 for (Torrent torrent : list) {
                     e.onNext(torrent);
                 }

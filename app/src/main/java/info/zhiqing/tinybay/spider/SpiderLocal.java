@@ -79,7 +79,6 @@ public class SpiderLocal implements Spider {
             body = response.body().string();
         }
         response.close();
-        System.out.println(body);
         return body;
     }
 

@@ -4,8 +4,11 @@ package info.zhiqing.tinybay.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import info.zhiqing.tinybay.R;
+import info.zhiqing.tinybay.adapter.CategoryListAdapter;
 import info.zhiqing.tinybay.adapter.CategoryViewPagerAdapter;
 import info.zhiqing.tinybay.entities.Category;
 import info.zhiqing.tinybay.util.CategoryUtil;
@@ -22,9 +26,10 @@ import info.zhiqing.tinybay.util.CategoryUtil;
  * A simple {@link Fragment} subclass.
  */
 public class CategoryFragment extends Fragment {
-    private ViewPager viewPager;
 
-    private FragmentStatePagerAdapter adapter = null;
+    private RecyclerView categoriesListView;
+
+    private CategoryListAdapter adapter = null;
 
 
     public CategoryFragment() {
@@ -38,7 +43,7 @@ public class CategoryFragment extends Fragment {
     }
 
     private void init() {
-        adapter = new CategoryViewPagerAdapter(getFragmentManager(), CategoryUtil.CATEGORIES);
+        adapter = new CategoryListAdapter(getContext());
     }
 
     @Override
@@ -53,9 +58,10 @@ public class CategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_category, container, false);
 
-        viewPager = v.findViewById(R.id.category_pager);
+        categoriesListView = v.findViewById(R.id.cate_list);
+        categoriesListView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        viewPager.setAdapter(adapter);
+        categoriesListView.setAdapter(adapter);
 
         return v;
     }

@@ -12,6 +12,7 @@ import java.util.List;
 
 import info.zhiqing.tinybay.R;
 import info.zhiqing.tinybay.entities.Category;
+import info.zhiqing.tinybay.util.CategoryUtil;
 
 /**
  * Created by zhiqing on 18-1-5.
@@ -37,6 +38,7 @@ public class SubCategoryRecyclerAdapter extends RecyclerView.Adapter<SubCategory
     @Override
     public void onBindViewHolder(SubCategoryItemViewHolder holder, int position) {
         holder.textView.setText(categories.get(position).getTitle());
+        holder.textView.setBackgroundColor(CategoryUtil.codeToColor(categories.get(position).getCode()));
     }
 
     @Override

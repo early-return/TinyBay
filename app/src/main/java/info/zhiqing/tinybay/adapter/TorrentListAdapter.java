@@ -83,6 +83,7 @@ public class TorrentListAdapter extends RecyclerView.Adapter<TorrentListAdapter.
 
         Observable<Torrent> observable = SpiderClient.getInstance().fetchTorrentsByUrl(url);
         observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Torrent>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -92,7 +93,6 @@ public class TorrentListAdapter extends RecyclerView.Adapter<TorrentListAdapter.
                     @Override
                     public void onNext(Torrent torrent) {
                         addData(torrent);
-                        Log.d(TAG, torrent.getTitle());
                     }
 
                     @Override

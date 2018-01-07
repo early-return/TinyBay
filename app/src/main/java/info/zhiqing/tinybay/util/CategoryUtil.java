@@ -49,6 +49,10 @@ public class CategoryUtil {
         }
     }
 
+    public static String parentCode(String code) {
+        return code.substring(0, 1);
+    }
+
     //初始化分类信息
     public static Observable<Void> initCategories(Context context) {
         if (CategoryUtil.CATEGORIES == null ||
@@ -65,6 +69,7 @@ public class CategoryUtil {
                     initCodeTitleMap();
                     initCodeColorMap(res);
                     initCodeIconMap();
+                    e.onComplete();
                 }
             }).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());

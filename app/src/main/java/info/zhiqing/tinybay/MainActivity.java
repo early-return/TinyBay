@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +25,8 @@ import java.util.Map;
 import info.zhiqing.tinybay.entities.Category;
 import info.zhiqing.tinybay.fragment.CategoryFragment;
 import info.zhiqing.tinybay.util.CategoryUtil;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 public class MainActivity extends AppCompatActivity
@@ -40,19 +43,31 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         CategoryUtil.initCategories(this)
-                .subscribe(new Consumer<Void>() {
+                .subscribe(new Observer<Void>() {
                     @Override
-                    public void accept(Void aVoid) throws Exception {
-                        Log.d(TAG, "分类信息初始化完成！");
+                    public void onSubscribe(Disposable d) {
+
                     }
-                }, new Consumer<Throwable>() {
+
                     @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Snackbar.make(toolbar, "分类信息初始化错误：" + throwable.getMessage(), Snackbar.LENGTH_LONG)
+                    public void onNext(Void aVoid) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Snackbar.make(toolbar, "分类信息初始化错误：" + e.getMessage(), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "分类信息初始化完成！");
+                    }
                 });
+
 
         initView();
 
@@ -138,15 +153,15 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_browse) {
             showFragment(browseFragment, R.string.title_browse);
         } else if (id == R.id.nav_recent) {
-
+            Toast.makeText(this, "Recent", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_settings) {
-
+            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_help) {
-
+            Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_share) {
-
+            Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_send) {
-
+            Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
