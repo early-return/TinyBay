@@ -17,6 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,15 +34,15 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FloatingSearchView.OnSearchListener {
     public static final String TAG = "MainActivity";
 
     private Fragment browseFragment = null;
     private Fragment recentFragment = null;
 
-    Toolbar toolbar;
+    private FloatingSearchView floatingSearchView;
 
-
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +63,7 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void onError(Throwable e) {
-                        Snackbar.make(toolbar, "分类信息初始化错误：" + e.getMessage(), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
+
                     }
 
                     @Override
@@ -81,23 +83,18 @@ public class MainActivity extends AppCompatActivity
         browseFragment = new CategoryFragment();
         recentFragment = TorrentListFragment.newInstance("https://thepiratebay.org/recent");
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        floatingSearchView = (FloatingSearchView) findViewById(R.id.floating_search);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                floatingSearchView.setSearchFocused(true);
             }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        floatingSearchView.attachNavigationDrawerToMenuButton(drawer);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -110,7 +107,8 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_main, fragment)
                 .commit();
-        toolbar.setTitle(titleId);
+        title = getResources().getString(titleId);
+        floatingSearchView.setSearchBarTitle(title);
     }
 
 
@@ -157,6 +155,8 @@ public class MainActivity extends AppCompatActivity
             showFragment(browseFragment, R.string.title_browse);
         } else if (id == R.id.nav_recent) {
             showFragment(recentFragment, R.string.title_recent);
+        } else if (id == R.id.nav_search) {
+            floatingSearchView.setSearchFocused(true);
         } else if (id == R.id.nav_settings) {
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_help) {
@@ -170,5 +170,15 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+
+    }
+
+    @Override
+    public void onSearchAction(String currentQuery) {
+
     }
 }
