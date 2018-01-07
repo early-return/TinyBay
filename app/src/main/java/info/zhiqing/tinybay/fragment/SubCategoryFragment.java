@@ -60,7 +60,7 @@ public class SubCategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_sub_category_item, container, false);
+        View v = inflater.inflate(R.layout.category_item, container, false);
 
 
         initView(v);

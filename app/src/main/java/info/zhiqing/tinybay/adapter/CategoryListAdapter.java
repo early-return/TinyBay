@@ -2,7 +2,6 @@ package info.zhiqing.tinybay.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +37,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     @Override
     public CateListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        return new CateListItemViewHolder(inflater.inflate(R.layout.fragment_sub_category_item, parent, false));
+        return new CateListItemViewHolder(inflater.inflate(R.layout.category_item, parent, false));
     }
 
     @Override
