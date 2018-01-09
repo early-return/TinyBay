@@ -12,13 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import info.zhiqing.tinybay.R;
-import info.zhiqing.tinybay.adapter.TorrentListAdapter;
+import info.zhiqing.tinybay.adapter.TorrentsAdapter;
 import info.zhiqing.tinybay.entities.Torrent;
 import info.zhiqing.tinybay.spider.SpiderClient;
+import info.zhiqing.tinybay.view.LoadMoreView;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -43,7 +46,7 @@ public class TorrentListFragment extends Fragment {
     private View loadingPage;
     private SwipeRefreshLayout swipeLayout;
 
-    private TorrentListAdapter adapter;
+    private TorrentsAdapter adapter;
     private LinearLayoutManager layoutManager;
     private List<View> pages = new ArrayList<>();
 
@@ -77,7 +80,7 @@ public class TorrentListFragment extends Fragment {
         baseUrl = args.getString(ARG_URL);
 
         if (adapter == null) {
-            adapter = new TorrentListAdapter(getContext());
+            adapter = new TorrentsAdapter(R.layout.torrents_item, new ArrayList<Torrent>());
         }
 
 
@@ -112,11 +115,11 @@ public class TorrentListFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && lastVisibleItem + 5 > adapter.getItemCount()
-                        && !adapter.isLoadingMore()) {
-                    loadData(false);
-                }
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE
+//                        && lastVisibleItem + 5 > adapter.getItemCount()
+//                        && !adapter.isLoadingMore()) {
+//                    loadData(false);
+//                }
             }
 
             @Override
@@ -140,6 +143,24 @@ public class TorrentListFragment extends Fragment {
                 loadData(true);
             }
         });
+
+
+        adapter.openLoadAnimation();
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                // TODO 启动详情页
+                Toast.makeText(getContext(), ((Torrent) adapter.getItem(position)).getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                loadData(false);
+            }
+        }, recyclerView);
+        adapter.setLoadMoreView(new LoadMoreView());
 
         if (currentPage == 0) {
             loadData(false);
@@ -174,7 +195,7 @@ public class TorrentListFragment extends Fragment {
         String url = baseUrl + "/" + currentPage + "";
 
         currentPage++;
-        adapter.setLoadingMore(true);
+//        adapter.setLoadingMore(true);
 
         Observable<List<Torrent>> observable = SpiderClient.getInstance().fetchTorrentsByUrl(url);
         observable.subscribeOn(Schedulers.io())
@@ -188,15 +209,18 @@ public class TorrentListFragment extends Fragment {
                     public void onNext(List<Torrent> torrents) {
                         if (torrents.size() == 0) {
                             loadedAll = true;
+                            adapter.loadMoreEnd();
+                            return;
                         }
                         if (refresh) {
                             loadedAll = false;
                             currentPage = 0;
                             recyclerView.smoothScrollToPosition(0);
-                            adapter.clearData();
+//                            adapter.clearData();
                         }
                         adapter.addData(torrents);
                         adapter.notifyDataSetChanged();
+                        adapter.loadMoreComplete();
                     }
 
                     @Override
@@ -209,7 +233,6 @@ public class TorrentListFragment extends Fragment {
                         swipeLayout.setRefreshing(false);
                         state = STATE_SHOWING;
                         switchPage();
-                        adapter.setLoadingMore(false);
                     }
                 });
     }
