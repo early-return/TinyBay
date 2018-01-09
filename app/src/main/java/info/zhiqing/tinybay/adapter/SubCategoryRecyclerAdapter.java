@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import info.zhiqing.tinybay.R;
+import info.zhiqing.tinybay.activity.SearchActivity;
 import info.zhiqing.tinybay.entities.Category;
 import info.zhiqing.tinybay.util.CategoryUtil;
 
@@ -36,9 +37,15 @@ public class SubCategoryRecyclerAdapter extends RecyclerView.Adapter<SubCategory
     }
 
     @Override
-    public void onBindViewHolder(SubCategoryItemViewHolder holder, int position) {
+    public void onBindViewHolder(SubCategoryItemViewHolder holder, final int position) {
         holder.textView.setText(categories.get(position).getTitle());
         holder.textView.setBackgroundColor(CategoryUtil.codeToColor(categories.get(position).getCode()));
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchActivity.actionStart(context, "https://thepiratebay.org/browse/" + categories.get(position).getCode(), categories.get(position).getTitle());
+            }
+        });
     }
 
     @Override

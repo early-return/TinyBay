@@ -16,9 +16,12 @@ import android.widget.Toast;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 
+import info.zhiqing.tinybay.activity.SearchActivity;
 import info.zhiqing.tinybay.fragment.CategoryFragment;
 import info.zhiqing.tinybay.fragment.TorrentListFragment;
 import info.zhiqing.tinybay.util.CategoryUtil;
+import info.zhiqing.tinybay.util.ConfigUtil;
+import info.zhiqing.tinybay.util.InitUtil;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -27,7 +30,6 @@ public class MainActivity extends AppCompatActivity
     public static final String TAG = "MainActivity";
 
     private Fragment browseFragment = null;
-    private Fragment recentFragment = null;
 
     private FloatingSearchView floatingSearchView;
 
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
 
-        CategoryUtil.initCategories(this)
+        InitUtil.init(this)
                 .subscribe(new Observer<Void>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Toast.makeText(MainActivity.this, R.string.tips_init_failed, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -70,7 +72,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         browseFragment = new CategoryFragment();
-        recentFragment = TorrentListFragment.newInstance("https://thepiratebay.org/recent");
 
         floatingSearchView = (FloatingSearchView) findViewById(R.id.floating_search);
 
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_browse) {
             showFragment(browseFragment, R.string.title_browse);
         } else if (id == R.id.nav_recent) {
-            showFragment(recentFragment, R.string.title_recent);
+            SearchActivity.actionStart(this, ConfigUtil.BASE_URL + "/recent/", getResources().getString(R.string.title_recent));
         } else if (id == R.id.nav_search) {
             floatingSearchView.setSearchFocused(true);
         } else if (id == R.id.nav_settings) {

@@ -44,11 +44,12 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @Override
     public void onBindViewHolder(CateListItemViewHolder holder, int position) {
+        final Category category = CategoryUtil.CATEGORIES.get(position);
         holder.icon.setImageResource(
-                CategoryUtil.codeToIconRes(CategoryUtil.CATEGORIES.get(position).getCode()));
-        holder.title.setText(CategoryUtil.CATEGORIES.get(position).getTitle());
+                CategoryUtil.codeToIconRes(category.getCode()));
+        holder.title.setText(category.getTitle());
         holder.cateListBar.setBackgroundColor(
-                CategoryUtil.codeToColor(CategoryUtil.CATEGORIES.get(position).getCode()));
+                CategoryUtil.codeToColor(category.getCode()));
         holder.list.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         holder.list.setAdapter(adapters.get(position));
@@ -56,8 +57,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SearchActivity.class);
-                context.startActivity(intent);
+                SearchActivity.actionStart(context, "https://thepiratebay.org/browse/" + category.getCode(), category.getTitle());
             }
         });
     }

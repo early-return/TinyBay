@@ -34,7 +34,7 @@ public class TorrentListFragment extends Fragment {
     private static final String ARG_URL = "info.zhiqing.tinybay.ARG_URL";
 
     public static final int STATE_LOADING = 0;
-    public static final int STATE_SGOWING = 1;
+    public static final int STATE_SHOWING = 1;
 
     private int state = 0;
 
@@ -114,7 +114,7 @@ public class TorrentListFragment extends Fragment {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 5 > adapter.getItemCount()
                         && !adapter.isLoadingMore()) {
-                    loadData();
+                    loadData(false);
                 }
             }
 
@@ -136,12 +136,12 @@ public class TorrentListFragment extends Fragment {
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshData();
+                loadData(true);
             }
         });
 
         if (currentPage == 0) {
-            loadData();
+            loadData(false);
         }
     }
 
@@ -150,7 +150,7 @@ public class TorrentListFragment extends Fragment {
             case STATE_LOADING:
                 switchPage(loadingPage);
                 break;
-            case STATE_SGOWING:
+            case STATE_SHOWING:
                 switchPage(recyclerView);
                 break;
         }
@@ -165,14 +165,8 @@ public class TorrentListFragment extends Fragment {
         v.setVisibility(View.VISIBLE);
     }
 
-    public void refreshData() {
-        loadedAll = false;
-        currentPage = 0;
-        adapter.clearData();
-        loadData();
-    }
 
-    public void loadData() {
+    public void loadData(final boolean refresh) {
 
         if (loadedAll) return;
 
@@ -194,6 +188,12 @@ public class TorrentListFragment extends Fragment {
                         if (torrents.size() == 0) {
                             loadedAll = true;
                         }
+                        if (refresh) {
+                            loadedAll = false;
+                            currentPage = 0;
+                            recyclerView.smoothScrollToPosition(0);
+                            adapter.clearData();
+                        }
                         adapter.addData(torrents);
                         adapter.notifyDataSetChanged();
                     }
@@ -206,7 +206,7 @@ public class TorrentListFragment extends Fragment {
                     @Override
                     public void onComplete() {
                         swipeLayout.setRefreshing(false);
-                        state = STATE_SGOWING;
+                        state = STATE_SHOWING;
                         switchPage();
                         adapter.setLoadingMore(false);
                     }

@@ -50,7 +50,7 @@ public class TorrentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void clearData() {
-        torrents.clear();
+        torrents = new ArrayList<>();
     }
 
     public boolean isLoadingMore() {

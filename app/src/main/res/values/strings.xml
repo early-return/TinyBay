@@ -24,6 +24,7 @@
     <string name="action_settings">设置</string>
 
     <string name="tips_searching">请输入搜索内容...</string>
+    <string name="tips_init_failed">信息初始化失败！</string>
 
 
     //数组相关

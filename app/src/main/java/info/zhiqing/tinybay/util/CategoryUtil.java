@@ -54,27 +54,21 @@ public class CategoryUtil {
     }
 
     //初始化分类信息
-    public static Observable<Void> initCategories(Context context) {
+    public static void init(Context context) {
+
         if (CategoryUtil.CATEGORIES == null ||
                 CategoryUtil.SUB_CATEGORIES == null ||
                 CategoryUtil.codeTitleMap == null) {
 
             final Resources res = context.getResources();
 
-            return Observable.create(new ObservableOnSubscribe<Void>() {
-                @Override
-                public void subscribe(ObservableEmitter<Void> e) throws Exception {
-                    initParentCategories(res);
-                    initSubCategories(res);
-                    initCodeTitleMap();
-                    initCodeColorMap(res);
-                    initCodeIconMap();
-                    e.onComplete();
-                }
-            }).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread());
+            initParentCategories(res);
+            initSubCategories(res);
+            initCodeTitleMap();
+            initCodeColorMap(res);
+            initCodeIconMap();
+
         }
-        return Observable.empty();
     }
 
 
