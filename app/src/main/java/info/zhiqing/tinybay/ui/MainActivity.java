@@ -1,7 +1,10 @@
 package info.zhiqing.tinybay.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -44,7 +47,6 @@ public class MainActivity extends AppCompatActivity
         browseFragment = new CategoryFragment();
 
         floatingSearchView = (FloatingSearchView) findViewById(R.id.floating_search);
-        floatingSearchView.setSearchBarTitle(getResources().getString(R.string.app_name));
         floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
@@ -81,6 +83,11 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        floatingSearchView.setSearchBarTitle(getResources().getString(R.string.app_name));
+    }
 
     @Override
     public void onBackPressed() {
@@ -123,7 +130,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_browse) {
             showFragment(browseFragment, R.string.title_browse);
         } else if (id == R.id.nav_recent) {
-            SearchActivity.actionStart(this, ConfigUtil.BASE_URL + "/recent/", getResources().getString(R.string.title_recent));
+            SearchActivity.actionStart(this, ConfigUtil.BASE_URL + "/recent", getResources().getString(R.string.title_recent));
         } else if (id == R.id.nav_search) {
             floatingSearchView.setSearchFocused(true);
         } else if (id == R.id.nav_settings) {
@@ -131,9 +138,18 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_help) {
             Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_share) {
-            Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            // TODO 分享内容
         } else if (id == R.id.nav_send) {
-            Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
+            Uri uri = Uri.parse("mailto:lizhiqing1996@gmail.com");
+            Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+            intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.tips_email_subject));
+            if (intent.resolveActivity(getPackageManager()) == null) {
+                Snackbar.make(findViewById(R.id.floating_search),
+                        getString(R.string.tips_no_email_client),
+                        Snackbar.LENGTH_LONG).show();
+            }
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

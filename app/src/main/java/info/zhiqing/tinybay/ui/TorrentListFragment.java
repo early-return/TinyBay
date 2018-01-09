@@ -190,12 +190,15 @@ public class TorrentListFragment extends Fragment {
 
     public void loadData(final boolean refresh) {
 
+        if (refresh) {
+            loadedAll = false;
+            currentPage = 0;
+        }
+
         if (loadedAll) return;
 
         String url = baseUrl + "/" + currentPage + "";
 
-        currentPage++;
-//        adapter.setLoadingMore(true);
 
         Observable<List<Torrent>> observable = SpiderClient.getInstance().fetchTorrentsByUrl(url);
         observable.subscribeOn(Schedulers.io())
@@ -213,10 +216,8 @@ public class TorrentListFragment extends Fragment {
                             return;
                         }
                         if (refresh) {
-                            loadedAll = false;
-                            currentPage = 0;
                             recyclerView.smoothScrollToPosition(0);
-//                            adapter.clearData();
+                            adapter.setNewData(new ArrayList<Torrent>());
                         }
                         adapter.addData(torrents);
                         adapter.notifyDataSetChanged();
@@ -232,6 +233,7 @@ public class TorrentListFragment extends Fragment {
                     public void onComplete() {
                         swipeLayout.setRefreshing(false);
                         state = STATE_SHOWING;
+                        currentPage++;
                         switchPage();
                     }
                 });
