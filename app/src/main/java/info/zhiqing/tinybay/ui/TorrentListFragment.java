@@ -1,4 +1,4 @@
-package info.zhiqing.tinybay.fragment;
+package info.zhiqing.tinybay.ui;
 
 
 import android.os.Bundle;
@@ -108,6 +108,7 @@ public class TorrentListFragment extends Fragment {
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int lastVisibleItem = 0;
+
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);

@@ -1,7 +1,6 @@
 package info.zhiqing.tinybay.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import info.zhiqing.tinybay.R;
-import info.zhiqing.tinybay.activity.SearchActivity;
+import info.zhiqing.tinybay.ui.SearchActivity;
 import info.zhiqing.tinybay.entities.Category;
 import info.zhiqing.tinybay.util.CategoryUtil;
 

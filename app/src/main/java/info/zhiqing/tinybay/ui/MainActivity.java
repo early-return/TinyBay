@@ -1,4 +1,4 @@
-package info.zhiqing.tinybay;
+package info.zhiqing.tinybay.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,10 +16,7 @@ import android.widget.Toast;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 
-import info.zhiqing.tinybay.activity.SearchActivity;
-import info.zhiqing.tinybay.fragment.CategoryFragment;
-import info.zhiqing.tinybay.fragment.TorrentListFragment;
-import info.zhiqing.tinybay.util.CategoryUtil;
+import info.zhiqing.tinybay.R;
 import info.zhiqing.tinybay.util.ConfigUtil;
 import info.zhiqing.tinybay.util.InitUtil;
 import io.reactivex.Observer;
@@ -36,31 +33,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        InitUtil.init(this)
-                .subscribe(new Observer<Void>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Void aVoid) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(MainActivity.this, R.string.tips_init_failed, Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, "分类信息初始化完成！");
-                    }
-                });
-
 
         initView();
 
@@ -108,7 +80,6 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.content_main, fragment)
                 .commit();
     }
-
 
 
     @Override

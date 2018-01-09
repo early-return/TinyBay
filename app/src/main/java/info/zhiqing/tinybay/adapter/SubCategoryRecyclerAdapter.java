@@ -5,13 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 import info.zhiqing.tinybay.R;
-import info.zhiqing.tinybay.activity.SearchActivity;
+import info.zhiqing.tinybay.ui.SearchActivity;
 import info.zhiqing.tinybay.entities.Category;
 import info.zhiqing.tinybay.util.CategoryUtil;
 

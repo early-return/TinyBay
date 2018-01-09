@@ -1,31 +1,19 @@
-package info.zhiqing.tinybay.activity;
+package info.zhiqing.tinybay.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 
 import info.zhiqing.tinybay.R;
-import info.zhiqing.tinybay.entities.Torrent;
-import info.zhiqing.tinybay.fragment.CategoryFragment;
-import info.zhiqing.tinybay.fragment.TorrentListFragment;
-import info.zhiqing.tinybay.util.CategoryUtil;
 import info.zhiqing.tinybay.util.ConfigUtil;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 public class SearchActivity extends AppCompatActivity implements FloatingSearchView.OnSearchListener {
     public static final String TAG = "SearchActivity";
