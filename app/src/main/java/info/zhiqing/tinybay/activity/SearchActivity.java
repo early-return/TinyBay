@@ -35,9 +35,9 @@ public class SearchActivity extends AppCompatActivity implements FloatingSearchV
 
 
     private FloatingSearchView floatingSearchView;
-    private Fragment fragment;
     private String title = "";
     private String baseUrl = ConfigUtil.BASE_URL + "/search/hello";
+    private String searchUrl;
 
     public static void actionStart(Context context, String url, String title) {
         Intent intent = new Intent(context, SearchActivity.class);
@@ -59,7 +59,8 @@ public class SearchActivity extends AppCompatActivity implements FloatingSearchV
     private void init() {
         baseUrl = getIntent().getStringExtra(EXTRA_URL);
         title = getIntent().getStringExtra(EXTRA_TITLE);
-        fragment = TorrentListFragment.newInstance(baseUrl);
+
+        searchUrl = ConfigUtil.BASE_URL + "/search/";
     }
 
     private void initView() {
@@ -74,6 +75,20 @@ public class SearchActivity extends AppCompatActivity implements FloatingSearchV
             }
         });
 
+        floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+
+            }
+
+            @Override
+            public void onSearchAction(String currentQuery) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.torrents_content, TorrentListFragment.newInstance(searchUrl + currentQuery))
+                        .commit();
+            }
+        });
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +98,7 @@ public class SearchActivity extends AppCompatActivity implements FloatingSearchV
         });
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.torrents_content, fragment)
+                .replace(R.id.torrents_content, TorrentListFragment.newInstance(baseUrl))
                 .commit();
 
     }

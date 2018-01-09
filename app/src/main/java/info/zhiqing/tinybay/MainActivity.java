@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity
 
     private FloatingSearchView floatingSearchView;
 
-    private String title;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +72,18 @@ public class MainActivity extends AppCompatActivity
         browseFragment = new CategoryFragment();
 
         floatingSearchView = (FloatingSearchView) findViewById(R.id.floating_search);
+        floatingSearchView.setSearchBarTitle(getResources().getString(R.string.app_name));
+        floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+
+            }
+
+            @Override
+            public void onSearchAction(String currentQuery) {
+                SearchActivity.actionStart(MainActivity.this, ConfigUtil.BASE_URL + "/search/" + currentQuery, currentQuery);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -97,8 +107,6 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_main, fragment)
                 .commit();
-        title = getResources().getString(titleId);
-        floatingSearchView.setSearchBarTitle(title);
     }
 
 
