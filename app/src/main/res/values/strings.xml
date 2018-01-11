@@ -33,6 +33,14 @@
     <string name="tips_init_failed">信息初始化失败！</string>
     <string name="tips_no_email_client">你的手机上没有邮件客户端！</string>
     <string name="tips_email_subject">来自小海湾的反馈</string>
+    <string name="tips_copy_to_clipboard">已成功复制到剪切板！</string>
+    <string name="tips_no_app_to_open">您手机里没有能打开磁力链接的应用！</string>
+
+    <!-- 详情页相关 -->
+    <string name="detail_title_intro">简介</string>
+    <string name="detail_title_link">磁力链接</string>
+    <string name="detail_button_copy">复制</string>
+    <string name="detail_button_open">打开</string>
 
 
     //数组相关

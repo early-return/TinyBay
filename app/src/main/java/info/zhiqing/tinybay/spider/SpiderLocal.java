@@ -24,6 +24,7 @@ import okhttp3.*;
  */
 
 public class SpiderLocal implements Spider {
+    public static final String TAG = "SpiderLocal";
 
     private String baseUrl = "https://thepiratebay.org/";
 
@@ -234,6 +235,7 @@ public class SpiderLocal implements Spider {
 
     public TorrentDetail detail(String code) throws IOException {
         String url = baseUrl + "/torrent/" + code;
+        Log.d(TAG, url);
         String body = fetchPageByUrl(url);
         return collectDetail(body);
     }

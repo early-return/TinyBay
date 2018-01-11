@@ -6,6 +6,7 @@ import java.util.List;
 
 import info.zhiqing.tinybay.entities.Torrent;
 import info.zhiqing.tinybay.entities.TorrentDetail;
+import info.zhiqing.tinybay.util.ConfigUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -20,18 +21,20 @@ import io.reactivex.schedulers.Schedulers;
 public class SpiderClient {
     public static final String TAG = "SpiderClient";
 
-    private Spider spider = new SpiderLocal();
+    private Spider spider;
 
     private static SpiderClient instance;
 
     public static SpiderClient getInstance() {
         if (instance == null) {
-            instance = new SpiderClient();
+            instance = new SpiderClient(ConfigUtil.BASE_URL);
         }
         return instance;
     }
 
-    private SpiderClient() { }
+    private SpiderClient(String url) {
+        spider = new SpiderLocal(url);
+    }
 
     public Observable<List<Torrent>> fetchTorrentsByUrl(final String url) {
         return Observable.create(new ObservableOnSubscribe<List<Torrent>>() {

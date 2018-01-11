@@ -24,7 +24,6 @@
         </activity>
         <activity
             android:name=".ui.SearchActivity"
-            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.TorrentDetailActivity"></activity>
     </application>

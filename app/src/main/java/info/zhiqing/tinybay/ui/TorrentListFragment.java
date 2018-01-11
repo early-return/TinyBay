@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import info.zhiqing.tinybay.R;
 import info.zhiqing.tinybay.adapter.TorrentsAdapter;
 import info.zhiqing.tinybay.entities.Torrent;
+import info.zhiqing.tinybay.entities.TorrentDetail;
 import info.zhiqing.tinybay.spider.SpiderClient;
 import info.zhiqing.tinybay.view.LoadMoreView;
 import io.reactivex.Observable;
@@ -185,8 +186,8 @@ public class TorrentListFragment extends Fragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                // TODO 启动详情页
-                Toast.makeText(getContext(), ((Torrent) adapter.getItem(position)).getTitle(), Toast.LENGTH_SHORT).show();
+                Torrent torrent = (Torrent) adapter.getData().get(position);
+                TorrentDetailActivity.actionStart(getContext(), torrent.getTitle(), torrent.getCode());
             }
         });
 
