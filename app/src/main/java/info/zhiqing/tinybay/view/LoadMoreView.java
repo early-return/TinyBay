@@ -10,22 +10,22 @@ public class LoadMoreView extends com.chad.library.adapter.base.loadmore.LoadMor
 
     @Override
     public int getLayoutId() {
-        return R.layout.quick_view_load_more;
+        return R.layout.torrents_loadmore;
     }
 
 
     @Override
     protected int getLoadingViewId() {
-        return R.id.load_more_loading_view;
+        return R.id.loading_more_view;
     }
 
     @Override
     protected int getLoadFailViewId() {
-        return R.id.load_more_load_fail_view;
+        return R.id.loading_more_failed;
     }
 
     @Override
     protected int getLoadEndViewId() {
-        return 0;
+        return R.id.loading_more_end;
     }
 }

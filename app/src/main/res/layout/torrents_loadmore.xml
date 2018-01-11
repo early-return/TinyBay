@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="wrap_content">
 
-    <ProgressBar
-        android:layout_margin="10dp"
+    <LinearLayout
+        android:id="@+id/loading_more_view"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:maxWidth="20dp"
+            android:maxHeight="20dp"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="@string/tips_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loading_more_failed"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <TextView
+            android:text="@string/tips_loading_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loading_more_end"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/tips_load_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</FrameLayout>

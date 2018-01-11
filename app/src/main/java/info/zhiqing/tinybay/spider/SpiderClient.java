@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.List;
 
 import info.zhiqing.tinybay.entities.Torrent;
+import info.zhiqing.tinybay.entities.TorrentDetail;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -39,6 +40,17 @@ public class SpiderClient {
                 List<Torrent> list = spider.list(url);
                 Log.d(TAG, "Get " + url + " : " + list.size());
                 e.onNext(list);
+                e.onComplete();
+            }
+        });
+    }
+
+    public Observable<TorrentDetail> fetchTorrentDetail(final String code) {
+        return Observable.create(new ObservableOnSubscribe<TorrentDetail>() {
+            @Override
+            public void subscribe(ObservableEmitter<TorrentDetail> e) throws Exception {
+                TorrentDetail detail = spider.detail(code);
+                e.onNext(detail);
                 e.onComplete();
             }
         });

@@ -10,12 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import info.zhiqing.tinybay.R;
 import info.zhiqing.tinybay.adapter.TorrentsAdapter;
@@ -24,8 +26,10 @@ import info.zhiqing.tinybay.spider.SpiderClient;
 import info.zhiqing.tinybay.view.LoadMoreView;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -38,12 +42,24 @@ public class TorrentListFragment extends Fragment {
 
     public static final int STATE_LOADING = 0;
     public static final int STATE_SHOWING = 1;
+    public static final int STATE_EMPTY = 2;
+    public static final int STATE_FAILED = 3;
+
+    private int loadingAnimIndex = 0;
+    private int[] loadingAnimRes = {
+            R.drawable.ic_loading_anim_01,
+            R.drawable.ic_loading_anim_02,
+            R.drawable.ic_loading_anim_03
+    };
 
     private int state = 0;
 
     //视图
     private RecyclerView recyclerView;
-    private View loadingPage;
+    private View loadingView;
+    private View loadingFailedView;
+    private View torrentsEmptyView;
+    private ImageView loadingImageView;
     private SwipeRefreshLayout swipeLayout;
 
     private TorrentsAdapter adapter;
@@ -100,8 +116,28 @@ public class TorrentListFragment extends Fragment {
     }
 
     private void initView(View v) {
-        loadingPage = v.findViewById(R.id.torrents_loading);
-        pages.add(loadingPage);
+        loadingView = v.findViewById(R.id.torrents_loading);
+        loadingFailedView = v.findViewById(R.id.torrents_load_failed);
+        torrentsEmptyView = v.findViewById(R.id.torrents_empty);
+        pages.add(loadingView);
+        pages.add(loadingFailedView);
+        pages.add(torrentsEmptyView);
+
+        loadingImageView = v.findViewById(R.id.loading_image);
+
+        Observable.interval(200, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        loadingImageView.setImageResource(loadingAnimRes[loadingAnimIndex]);
+                        loadingAnimIndex++;
+                        if (loadingAnimIndex == loadingAnimRes.length) {
+                            loadingAnimIndex = 0;
+                        }
+                    }
+                });
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView = v.findViewById(R.id.torrent_list);
@@ -170,10 +206,16 @@ public class TorrentListFragment extends Fragment {
     private void switchPage() {
         switch (state) {
             case STATE_LOADING:
-                switchPage(loadingPage);
+                switchPage(loadingView);
                 break;
             case STATE_SHOWING:
                 switchPage(recyclerView);
+                break;
+            case STATE_EMPTY:
+                switchPage(torrentsEmptyView);
+                break;
+            case STATE_FAILED:
+                switchPage(loadingFailedView);
                 break;
         }
     }
@@ -213,6 +255,10 @@ public class TorrentListFragment extends Fragment {
                         if (torrents.size() == 0) {
                             loadedAll = true;
                             adapter.loadMoreEnd();
+                            if (currentPage == 0) {
+                                state = STATE_EMPTY;
+                                switchPage();
+                            }
                             return;
                         }
                         if (refresh) {
@@ -226,15 +272,21 @@ public class TorrentListFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(getContext(), "出错: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        if (currentPage == 0) {
+                            state = STATE_FAILED;
+                            switchPage();
+                        }
+                        adapter.loadMoreFail();
                     }
 
                     @Override
                     public void onComplete() {
                         swipeLayout.setRefreshing(false);
-                        state = STATE_SHOWING;
-                        currentPage++;
-                        switchPage();
+                        if (state != STATE_EMPTY) {
+                            state = STATE_SHOWING;
+                            currentPage++;
+                            switchPage();
+                        }
                     }
                 });
     }

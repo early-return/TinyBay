@@ -26,6 +26,7 @@
     <!-- 提示 -->
     <string name="tips_searching">请输入搜索内容&#8230;</string>
     <string name="tips_loading">正在加载&#8230;</string>
+    <string name="tips_loading_failed">加载失败!</string>
     <string name="tips_network_error">网络已断开，请检查网络设置！</string>
     <string name="tips_not_result">搜索结果为空！</string>
     <string name="tips_load_end">已全部加载完成</string>
@@ -98,7 +99,6 @@
     <string name="category_list_sub_other_4">封面</string>
     <string name="category_list_sub_other_5">物理学</string>
     <string name="category_list_sub_other_6">其它</string>
-
 
 
 </resources>

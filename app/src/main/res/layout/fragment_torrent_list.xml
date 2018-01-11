@@ -13,17 +13,98 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/torrents_loading"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ProgressBar
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/loading_image"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:src="@drawable/ic_loading_anim_01"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="@string/tips_loading"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/torrents_load_failed"
+                android:gravity="center"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:src="@drawable/ic_loading_fail"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="@string/tips_loading_failed"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/torrents_empty"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/ic_empty_cute_girl_box"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="@string/tips_not_result"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+            </FrameLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:visibility="invisible"
