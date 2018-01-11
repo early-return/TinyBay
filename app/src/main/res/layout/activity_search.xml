@@ -50,8 +50,6 @@
         app:floatingSearch_leftActionMode="showHome"
         app:floatingSearch_leftActionColor="@color/colorPrimaryDark"
         app:floatingSearch_hintTextColor="@color/colorPrimaryDark"
-        app:floatingSearch_actionMenuOverflowColor="@color/colorPrimaryDark"
-        app:floatingSearch_menu="@menu/main"
         app:floatingSearch_searchHint="@string/tips_searching"
         app:floatingSearch_showSearchKey="true"
         app:floatingSearch_suggestionsListAnimDuration="250">

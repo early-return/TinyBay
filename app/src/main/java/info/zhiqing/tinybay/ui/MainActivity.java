@@ -26,7 +26,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FloatingSearchView.OnSearchListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FloatingSearchView.OnMenuItemClickListener, FloatingSearchView.OnSearchListener {
     public static final String TAG = "MainActivity";
 
     private Fragment browseFragment = null;
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity
                 SearchActivity.actionStart(MainActivity.this, ConfigUtil.BASE_URL + "/search/" + currentQuery, currentQuery);
             }
         });
+        floatingSearchView.setOnMenuItemClickListener(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -106,20 +107,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -134,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_search) {
             floatingSearchView.setSearchFocused(true);
         } else if (id == R.id.nav_settings) {
-            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+            SettingsActivity.actionStart(this);
         } else if (id == R.id.nav_help) {
             Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_share) {
@@ -164,6 +151,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSearchAction(String currentQuery) {
+
+    }
+
+    @Override
+    public void onActionMenuItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            SettingsActivity.actionStart(this);
+        }
 
     }
 }

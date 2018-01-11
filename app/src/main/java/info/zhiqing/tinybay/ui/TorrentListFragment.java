@@ -146,25 +146,6 @@ public class TorrentListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         pages.add(recyclerView);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            int lastVisibleItem = 0;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE
-//                        && lastVisibleItem + 5 > adapter.getItemCount()
-//                        && !adapter.isLoadingMore()) {
-//                    loadData(false);
-//                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition();
-            }
-        });
 
         swipeLayout = v.findViewById(R.id.swipe_layout);
         swipeLayout.setColorSchemeResources(

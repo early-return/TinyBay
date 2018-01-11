@@ -16,6 +16,7 @@ import info.zhiqing.tinybay.R;
 import info.zhiqing.tinybay.ui.SearchActivity;
 import info.zhiqing.tinybay.entities.Category;
 import info.zhiqing.tinybay.util.CategoryUtil;
+import info.zhiqing.tinybay.util.ConfigUtil;
 
 /**
  * Created by zhiqing on 18-1-7.
@@ -56,7 +57,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchActivity.actionStart(context, "https://thepiratebay.org/browse/" + category.getCode(), category.getTitle());
+                SearchActivity.actionStart(context, ConfigUtil.BASE_URL + "/browse/" + category.getCode(), category.getTitle());
             }
         });
     }

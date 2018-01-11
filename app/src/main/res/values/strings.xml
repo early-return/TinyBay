@@ -1,16 +1,16 @@
 <resources>
-    //App相关
+    <!-- App相关 -->
     <string name="app_name">小海湾</string>
     <string name="app_desc">一个海盗湾的第三方应用</string>
 
-    //状态栏标题
+    <!-- 状态栏标题 -->
     <string name="title_app">@string/app_name</string>
     <string name="title_top">Top100</string>
     <string name="title_browse">分类浏览</string>
     <string name="title_recent">最新发布</string>
     <string name="title_settings">设置</string>
 
-    //导航栏
+    <!-- 导航栏 -->
     <string name="nav_search">搜索</string>
     <string name="nav_browse">浏览</string>
     <string name="nav_recent">最新</string>
@@ -42,9 +42,23 @@
     <string name="detail_button_copy">复制</string>
     <string name="detail_button_open">打开</string>
 
+    <!-- 设置相关 -->
+    <string name="settings_title_app">应用相关</string>
+    <string name="settings_title_about">关于作者</string>
+    <string name="settings_title_url">基础地址</string>
+    <string name="settings_summary_url">海盗湾的基础地址，用于爬取数据。</string>
+    <string name="settings_title_porn">哲学模式</string>
+    <string name="settings_summary_porn">立即打开新世界的大门</string>
+    <string name="settings_title_help">帮助信息</string>
+    <string name="settings_summary_help">遇到问题就点开我看看吧，反正我也解决不了！</string>
+    <string name="settings_title_license">开源许可</string>
+    <string name="settings_summary_license">这也许是一个由Github自动生成的应用</string>
+    <string name="settings_title_about_me">关于我</string>
+    <string name="settings_summary_about_me">一个毕业就失业的大学生</string>
 
-    //数组相关
-    //父分类标题数组
+
+    <!-- 数组相关 -->
+    <!-- 父分类标题数组 -->
     <string name="category_list_parent_video">视频</string>
     <string name="category_list_parent_audio">音频</string>
     <string name="category_list_parent_app">应用</string>
@@ -52,7 +66,7 @@
     <string name="category_list_parent_porn">哲学</string>
     <string name="category_list_parent_other">其他</string>
 
-    //视频子分类标题数组
+    <!-- 视频子分类标题数组 -->
     <string name="category_list_sub_video_1">电影</string>
     <string name="category_list_sub_video_2">电影DVD</string>
     <string name="category_list_sub_video_3">MV</string>
@@ -64,14 +78,14 @@
     <string name="category_list_sub_video_9">3D</string>
     <string name="category_list_sub_video_10">其它</string>
 
-    //音频子分类标题数组
+    <!-- 音频子分类标题数组 -->
     <string name="category_list_sub_audio_1">音乐</string>
     <string name="category_list_sub_audio_2">有声读物</string>
     <string name="category_list_sub_audio_3">声音片段</string>
     <string name="category_list_sub_audio_4">FLAC</string>
     <string name="category_list_sub_audio_5">其它</string>
 
-    //应用子分类标题数组
+    <!-- 应用子分类标题数组 -->
     <string name="category_list_sub_app_1">Windows</string>
     <string name="category_list_sub_app_2">Mac</string>
     <string name="category_list_sub_app_3">Unix</string>
@@ -80,7 +94,7 @@
     <string name="category_list_sub_app_6">Android</string>
     <string name="category_list_sub_app_7">其它系统</string>
 
-    //游戏子分类标题数组
+    <!-- 游戏子分类标题数组 -->
     <string name="category_list_sub_game_1">PC</string>
     <string name="category_list_sub_game_2">Mac</string>
     <string name="category_list_sub_game_3">PSx</string>
@@ -91,7 +105,7 @@
     <string name="category_list_sub_game_8">Android</string>
     <string name="category_list_sub_game_9">其它</string>
 
-    //哲学子分类标题数组
+    <!-- 哲学子分类标题数组 -->
     <string name="category_list_sub_porn_1">电影</string>
     <string name="category_list_sub_porn_2">电影DVD</string>
     <string name="category_list_sub_porn_3">图片</string>
@@ -100,7 +114,7 @@
     <string name="category_list_sub_porn_6">电影片段</string>
     <string name="category_list_sub_porn_7">其它</string>
 
-    //其他子分类标题数组
+    <!-- 其他子分类标题数组 -->
     <string name="category_list_sub_other_1">电子书</string>
     <string name="category_list_sub_other_2">漫画</string>
     <string name="category_list_sub_other_3">图片</string>

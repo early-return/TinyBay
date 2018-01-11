@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/settings_title_app">
+
+        <EditTextPreference
+            android:key="pref_key_url"
+            android:defaultValue="https://thepiratebay.org"
+            android:title="@string/settings_title_url"
+            android:summary="@string/settings_summary_url" />
+
+        <SwitchPreference
+            android:key="pref_key_porn_mode"
+            android:defaultValue="false"
+            android:title="@string/settings_title_porn"
+            android:summary="@string/settings_summary_porn" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_title_about">
+
+        <Preference
+            android:title="@string/settings_title_help"
+            android:summary="@string/settings_summary_help">
+
+
+        </Preference>
+
+        <Preference
+            android:title="@string/settings_title_license"
+            android:summary="@string/settings_summary_license">
+
+
+        </Preference>
+
+        <Preference
+            android:title="@string/settings_title_about_me"
+            android:summary="@string/settings_summary_about_me">
+
+
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

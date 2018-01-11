@@ -68,6 +68,10 @@ public class CategoryUtil {
             initCodeColorMap(res);
             initCodeIconMap();
 
+            if (!ConfigUtil.PORN_MODE) {
+                CATEGORIES.remove(4);
+            }
+
         }
     }
 

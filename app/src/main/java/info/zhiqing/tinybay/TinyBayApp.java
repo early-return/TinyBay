@@ -1,6 +1,7 @@
 package info.zhiqing.tinybay;
 
 import android.app.Application;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,6 +20,10 @@ public class TinyBayApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //初始化设置项
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
 
 
         InitUtil.init(this)

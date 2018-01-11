@@ -25,7 +25,10 @@
         <activity
             android:name=".ui.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.TorrentDetailActivity"></activity>
+        <activity android:name=".ui.TorrentDetailActivity" />
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:parentActivityName=".ui.MainActivity"></activity>
     </application>
 
 </manifest>

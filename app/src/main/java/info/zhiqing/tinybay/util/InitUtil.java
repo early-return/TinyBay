@@ -11,20 +11,16 @@ import io.reactivex.ObservableOnSubscribe;
  */
 
 public class InitUtil {
-    private static boolean inited = false;
 
     public static Observable<Void> init(final Context context) {
-        if (!inited) {
-            return Observable.create(new ObservableOnSubscribe<Void>() {
-                @Override
-                public void subscribe(ObservableEmitter<Void> e) throws Exception {
-                    ConfigUtil.init(context);
-                    CategoryUtil.init(context);
+        return Observable.create(new ObservableOnSubscribe<Void>() {
+            @Override
+            public void subscribe(ObservableEmitter<Void> e) throws Exception {
+                ConfigUtil.init(context);
+                CategoryUtil.init(context);
 
-                    e.onComplete();
-                }
-            });
-        }
-        return Observable.empty();
+                e.onComplete();
+            }
+        });
     }
 }
