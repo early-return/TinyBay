@@ -2,6 +2,7 @@ package info.zhiqing.tinybay.util;
 
 import android.content.Context;
 
+import info.zhiqing.tinybay.spider.SpiderClient;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -18,6 +19,8 @@ public class InitUtil {
             public void subscribe(ObservableEmitter<Void> e) throws Exception {
                 ConfigUtil.init(context);
                 CategoryUtil.init(context);
+
+                SpiderClient.buildNewInstance();
 
                 e.onComplete();
             }

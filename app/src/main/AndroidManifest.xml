@@ -28,7 +28,11 @@
         <activity android:name=".ui.TorrentDetailActivity" />
         <activity
             android:name=".ui.SettingsActivity"
-            android:parentActivityName=".ui.MainActivity"></activity>
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.IntroActivity" />
+        <activity android:name=".ui.AboutActivity" />
     </application>
 
 </manifest>

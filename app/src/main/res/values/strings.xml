@@ -2,6 +2,9 @@
     <!-- App相关 -->
     <string name="app_name">小海湾</string>
     <string name="app_desc">一个海盗湾的第三方应用</string>
+    <string name="app_desc_detail">一个不知道处于什么目的写的海盗湾的客户端。之前写过一个通过服务器获取数据的版本，后来服务器被玩坏了。于是有了这个本地版，妈妈再也不用担心服务器被玩坏了！</string>
+    <string name="app_group_name">一个毕业就失业的大学生</string>
+    <string name="app_version">1.0.0</string>
 
     <!-- 状态栏标题 -->
     <string name="title_app">@string/app_name</string>
@@ -26,7 +29,7 @@
     <!-- 提示 -->
     <string name="tips_searching">请输入搜索内容&#8230;</string>
     <string name="tips_loading">正在加载&#8230;</string>
-    <string name="tips_loading_failed">加载失败!</string>
+    <string name="tips_loading_failed">加载失败!\n请检查网络是否正常或基础地址是否正确</string>
     <string name="tips_network_error">网络已断开，请检查网络设置！</string>
     <string name="tips_not_result">搜索结果为空！</string>
     <string name="tips_load_end">已全部加载完成</string>
@@ -35,6 +38,9 @@
     <string name="tips_email_subject">来自小海湾的反馈</string>
     <string name="tips_copy_to_clipboard">已成功复制到剪切板！</string>
     <string name="tips_no_app_to_open">您手机里没有能打开磁力链接的应用！</string>
+    <string name="tips_skip">跳过</string>
+    <string name="tips_done">完成</string>
+    <string name="tips_please_enter_url">请输入地址</string>
 
     <!-- 详情页相关 -->
     <string name="detail_title_intro">简介</string>
@@ -49,12 +55,29 @@
     <string name="settings_summary_url">海盗湾的基础地址，用于爬取数据。</string>
     <string name="settings_title_porn">哲学模式</string>
     <string name="settings_summary_porn">立即打开新世界的大门</string>
+    <string name="settings_title_intro">应用引导</string>
+    <string name="settings_summary_intro">引导您设置本应用</string>
     <string name="settings_title_help">帮助信息</string>
     <string name="settings_summary_help">遇到问题就点开我看看吧，反正我也解决不了！</string>
     <string name="settings_title_license">开源许可</string>
-    <string name="settings_summary_license">这也许是一个由Github自动生成的应用</string>
-    <string name="settings_title_about_me">关于我</string>
+    <string name="settings_summary_license">这可能是一个由Github自动生成的应用</string>
+    <string name="settings_title_about_me">关于作者</string>
     <string name="settings_summary_about_me">一个毕业就失业的大学生</string>
+    <string name="settings_title_about_app">关于应用</string>
+    <string name="settings_summary_about_app">@string/app_version</string>
+
+    <!-- 引导界面 -->
+    <string name="intro_title_welcome">欢迎使用小海湾</string>
+    <string name="intro_desc_welcome">一个包揽世间万物的应用:D</string>
+    <string name="intro_title_settings_url">请选择或输入一个的地址</string>
+    <string name="intro_desc_settings_url">该选项决定了本应用的数据来源，以后可随时进行更改。</string>
+    <string name="intro_item_settings_url_origin">https://thepiratebay.org </string>
+    <string name="intro_item_settings_url_origin_desc">(官方源地址,需科学上网)</string>
+    <string name="intro_item_settings_url_mine">http://tpb.zhiqing.info </string>
+    <string name="intro_item_settings_url_mine_desc">(作者搭建的镜像地址,无需科学上网)</string>
+    <string name="intro_item_settings_url_custom">自定义地址</string>
+    <string name="intro_title_complete">配置完成</string>
+    <string name="intro_desc_complete">您已经配置好应用最基本的项目，尽情的使用吧！</string>
 
 
     <!-- 数组相关 -->

@@ -15,9 +15,14 @@
             android:title="@string/settings_title_porn"
             android:summary="@string/settings_summary_porn" />
 
-    </PreferenceCategory>
+        <Preference
+            android:title="@string/settings_title_intro"
+            android:summary="@string/settings_summary_intro">
 
-    <PreferenceCategory android:title="@string/settings_title_about">
+            <intent
+                android:targetClass="info.zhiqing.tinybay.ui.IntroActivity"
+                android:targetPackage="info.zhiqing.tinybay" />
+        </Preference>
 
         <Preference
             android:title="@string/settings_title_help"
@@ -25,6 +30,11 @@
 
 
         </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_title_about">
+
 
         <Preference
             android:title="@string/settings_title_license"
@@ -34,10 +44,12 @@
         </Preference>
 
         <Preference
-            android:title="@string/settings_title_about_me"
-            android:summary="@string/settings_summary_about_me">
+            android:title="@string/settings_title_about_app"
+            android:summary="@string/settings_summary_about_app">
 
-
+            <intent
+                android:targetPackage="info.zhiqing.tinybay"
+                android:targetClass="info.zhiqing.tinybay.ui.AboutActivity" />
         </Preference>
 
     </PreferenceCategory>

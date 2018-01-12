@@ -36,6 +36,7 @@
                     <TextView
                         android:text="@string/tips_loading"
                         android:layout_gravity="center"
+                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -69,6 +70,7 @@
                     <TextView
                         android:text="@string/tips_loading_failed"
                         android:layout_gravity="center"
+                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -98,6 +100,7 @@
                     <TextView
                         android:text="@string/tips_not_result"
                         android:layout_gravity="center"
+                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 

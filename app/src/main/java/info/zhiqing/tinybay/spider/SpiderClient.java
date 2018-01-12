@@ -35,6 +35,10 @@ public class SpiderClient {
         return instance;
     }
 
+    public static void buildNewInstance() {
+        instance = new SpiderClient(ConfigUtil.BASE_URL);
+    }
+
     private SpiderClient(String url) {
         spider = new SpiderLocal(url);
     }

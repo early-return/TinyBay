@@ -1,8 +1,10 @@
 package info.zhiqing.tinybay.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -22,12 +24,20 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import info.zhiqing.tinybay.R;
 import info.zhiqing.tinybay.util.ConfigUtil;
 import info.zhiqing.tinybay.util.InitUtil;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FloatingSearchView.OnMenuItemClickListener, FloatingSearchView.OnSearchListener {
     public static final String TAG = "MainActivity";
+
+    public static final String KEY_FIRST_START = "first_start";
 
     private Fragment browseFragment = null;
 
@@ -36,6 +46,26 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
+            @Override
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                e.onNext(pref.getBoolean(KEY_FIRST_START, true));
+                pref.edit().putBoolean(KEY_FIRST_START, false).apply();
+                e.onComplete();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            Intent intent = new Intent(MainActivity.this, IntroActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
 
         initView();
 
@@ -161,6 +191,8 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             SettingsActivity.actionStart(this);
+        } else if (id == R.id.action_about) {
+            AboutActivity.actionStart(this);
         }
 
     }
