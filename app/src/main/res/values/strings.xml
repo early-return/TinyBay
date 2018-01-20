@@ -4,7 +4,7 @@
     <string name="app_desc">一个海盗湾的第三方应用</string>
     <string name="app_desc_detail">一个不知道处于什么目的写的海盗湾的客户端。之前写过一个通过服务器获取数据的版本，后来服务器被玩坏了。于是有了这个本地版，妈妈再也不用担心服务器被玩坏了！</string>
     <string name="app_group_name">一个毕业就失业的大学生</string>
-    <string name="app_version">1.0.0</string>
+    <string name="app_version">2.0.0</string>
 
     <!-- 状态栏标题 -->
     <string name="title_app">@string/app_name</string>
