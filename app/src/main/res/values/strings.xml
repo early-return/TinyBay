@@ -79,6 +79,22 @@
     <string name="intro_title_complete">配置完成</string>
     <string name="intro_desc_complete">您已经配置好应用最基本的项目，尽情的使用吧！</string>
 
+    <!-- 帮助信息 -->
+    <string name="faq_title">F&#38;Q</string>
+    <string name="faq_content">
+        \n
+        <i>本应用数据均来自海盗湾网站(https://thepiratebay.org/)</i>\n\n
+
+        <b>使用方法</b>\n
+        1.在主界面分类中查看各分类中最热门的资源\n
+        2.输入电影IMDB号搜索电影\n
+        3.用英文关键字搜索资源\n\n
+
+        <b>常见问题</b>\n
+        1.由于数据源原因，本应用不支持使用中文关键字进行搜索。\n
+    </string>
+    <string name="faq_button_ok">了解了</string>
+
 
     <!-- 数组相关 -->
     <!-- 父分类标题数组 -->

@@ -13,7 +13,9 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 
 import info.zhiqing.tinybay.R;
+import info.zhiqing.tinybay.entities.SearchHistory;
 import info.zhiqing.tinybay.util.ConfigUtil;
+import info.zhiqing.tinybay.util.SearchUtil;
 
 public class SearchActivity extends AppCompatActivity implements FloatingSearchView.OnSearchListener {
     public static final String TAG = "SearchActivity";
@@ -62,15 +64,19 @@ public class SearchActivity extends AppCompatActivity implements FloatingSearchV
                 onBackPressed();
             }
         });
+        SearchUtil.swapHistory(floatingSearchView);
 
         floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+                SearchHistory history = (SearchHistory) searchSuggestion;
+                SearchUtil.addToHistory(SearchActivity.this, history.getTitle());
 
             }
 
             @Override
             public void onSearchAction(String currentQuery) {
+                SearchUtil.addToHistory(SearchActivity.this, currentQuery);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.torrents_content, TorrentListFragment.newInstance(searchUrl + currentQuery))
                         .commit();

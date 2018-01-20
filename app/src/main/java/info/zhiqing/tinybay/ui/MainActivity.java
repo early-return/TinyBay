@@ -1,5 +1,6 @@
 package info.zhiqing.tinybay.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,14 +18,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 
 import info.zhiqing.tinybay.R;
+import info.zhiqing.tinybay.entities.SearchHistory;
 import info.zhiqing.tinybay.util.ConfigUtil;
 import info.zhiqing.tinybay.util.InitUtil;
+import info.zhiqing.tinybay.util.SearchUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -80,15 +87,18 @@ public class MainActivity extends AppCompatActivity
         floatingSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
-
+                SearchHistory history = (SearchHistory) searchSuggestion;
+                SearchUtil.addToHistory(MainActivity.this, history.getTitle());
             }
 
             @Override
             public void onSearchAction(String currentQuery) {
+                SearchUtil.addToHistory(MainActivity.this, currentQuery);
                 SearchActivity.actionStart(MainActivity.this, ConfigUtil.BASE_URL + "/search/" + currentQuery, currentQuery);
             }
         });
         floatingSearchView.setOnMenuItemClickListener(this);
+        SearchUtil.swapHistory(floatingSearchView);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +110,7 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         floatingSearchView.attachNavigationDrawerToMenuButton(drawer);
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -153,10 +164,21 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
             SettingsActivity.actionStart(this);
         } else if (id == R.id.nav_help) {
-            Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_share) {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            // TODO 分享内容
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.faq_title)
+                    .setMessage(R.string.faq_content)
+                    .setCancelable(true)
+                    .setPositiveButton(R.string.faq_button_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .show();
+        } else if (id == R.id.nav_about) {
+            AboutActivity.actionStart(this);
+        }
+        /* else if (id == R.id.nav_share) {
         } else if (id == R.id.nav_send) {
             Uri uri = Uri.parse("mailto:lizhiqing1996@gmail.com");
             Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
@@ -167,7 +189,7 @@ public class MainActivity extends AppCompatActivity
                         Snackbar.LENGTH_LONG).show();
             }
             startActivity(intent);
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

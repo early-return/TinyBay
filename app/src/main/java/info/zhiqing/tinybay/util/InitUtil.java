@@ -20,6 +20,8 @@ public class InitUtil {
                 ConfigUtil.init(context);
                 CategoryUtil.init(context);
 
+                SearchUtil.init(context);
+
                 SpiderClient.buildNewInstance();
 
                 e.onComplete();
