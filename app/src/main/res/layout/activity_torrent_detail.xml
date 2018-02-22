@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="info.zhiqing.tinybay.ui.TorrentDetailActivity">
+    tools:context="info.zhiqing.tinypiratebay.ui.TorrentDetailActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/detail_content"

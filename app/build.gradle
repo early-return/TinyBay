@@ -3,11 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "info.zhiqing.tinybay"
+        applicationId "info.zhiqing.tinypiratebay"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
-        versionName "2.0"
+        versionName "2.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

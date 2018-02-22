@@ -20,15 +20,8 @@
             android:summary="@string/settings_summary_intro">
 
             <intent
-                android:targetClass="info.zhiqing.tinybay.ui.IntroActivity"
-                android:targetPackage="info.zhiqing.tinybay" />
-        </Preference>
-
-        <Preference
-            android:title="@string/settings_title_help"
-            android:summary="@string/settings_summary_help">
-
-
+                android:targetClass="info.zhiqing.tinypiratebay.ui.IntroActivity"
+                android:targetPackage="info.zhiqing.tinypiratebay" />
         </Preference>
 
     </PreferenceCategory>
@@ -41,6 +34,10 @@
             android:summary="@string/settings_summary_license">
 
 
+            <intent
+                android:targetPackage="info.zhiqing.tinypiratebay"
+                android:targetClass="info.zhiqing.tinypiratebay.ui.LicenseActivity" />
+
         </Preference>
 
         <Preference
@@ -48,8 +45,8 @@
             android:summary="@string/settings_summary_about_app">
 
             <intent
-                android:targetPackage="info.zhiqing.tinybay"
-                android:targetClass="info.zhiqing.tinybay.ui.AboutActivity" />
+                android:targetPackage="info.zhiqing.tinypiratebay"
+                android:targetClass="info.zhiqing.tinypiratebay.ui.AboutActivity" />
         </Preference>
 
     </PreferenceCategory>
